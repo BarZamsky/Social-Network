@@ -66,7 +66,8 @@ UserSchema.methods.toJSON = function () {
 UserSchema.methods.generateAuthToken = function () {
     const user = this;
     const access = 'auth';
-    const token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET).toString();
+    //TODO: Replace the '' to process.env.JWT_SECRET
+    const token = jwt.sign({_id: user._id.toHexString(), access}, 'my_jwt').toString();
     user.tokens.push({access, token});
 
     return user.save()
@@ -106,18 +107,26 @@ UserSchema.statics.findByToken = async function (token) {
 
 UserSchema.statics.findByCredentials = function (email, password) {
     const User = this;
-    return User.findOne({email}).then(user => {
-        if (!user) {
-            return Promise.reject();
-        }
+    return User.findOne({email})
+        .then(user => {
+            if (!user) {
+                return Promise.reject({
+                    status_code: statusCode.USER_NOT_FOUND,
+                    error: true,
+                    msg: 'User not found'
+                });
+            }
 
         return new Promise((resolve, reject) => {
             bcrypt.compare(password, user.password, (err, res) => {
-                if (res) {
-                    resolve(user);
-                } else {
-                    reject();
+                if (err) {
+                    reject({
+                        status_code: statusCode.PASSWORD_NOT_MATCH,
+                        error: true,
+                        msg: 'User not found'
+                    })
                 }
+                resolve(user)
             });
         });
     });
@@ -139,4 +148,6 @@ UserSchema.pre('save', function (next) {
     }
 });
 
-module.exports = User = mongoose.model('user', UserSchema);
+const User = mongoose.model('User', UserSchema);
+
+module.exports = {User}

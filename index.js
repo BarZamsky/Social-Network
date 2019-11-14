@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const logger = require('./middleware/logger');
 const connectDB = require('./config/db')
 const routes = require('./api/v1')
+const cors = require('cors')
 
 const app = express();
 
 connectDB();
 
-app.use(express.json());
-app.use(bodyParser.text());
+app.use(cors());
 app.use(bodyParser.json({ limit: '5mb', type: 'application/json' }));
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 
