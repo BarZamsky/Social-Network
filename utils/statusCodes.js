@@ -1,0 +1,8 @@
+module.exports = Object.freeze({
+    INVALID_TOKEN: 1001,
+    UNAUTHORIZED: 1002,
+    USER_NOT_FOUND: 1003,
+    LOGIN_FAILED: 1004,
+    SIGNUP_FAILED: 1005,
+    SERVER_ERROR: 4004
+});

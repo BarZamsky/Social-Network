@@ -1,0 +1,20 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const logger = require('./middleware/logger');
+const connectDB = require('./config/db')
+const routes = require('./api/v1')
+
+const app = express();
+
+connectDB();
+
+app.use(express.json());
+app.use(bodyParser.text());
+app.use(bodyParser.json({ limit: '5mb', type: 'application/json' }));
+app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
+
+app.use('/api/v1', routes);
+
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => logger.log('debug',`running on port ${port}...`));
