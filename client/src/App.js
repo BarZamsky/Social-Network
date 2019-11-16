@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
-import {Route, Switch, withRouter, Redirect} from "react-router-dom"
-import {Homepage} from "./components/layout/Homepage"
-
+import {Router, Route, Switch} from "react-router-dom"
+import Homepage from "./components/layout/Homepage"
+import history from "./history"
 import './App.css';
 
 class App extends Component {
   render() {
       return (
-          <Switch>
-              <Route path="/" exact component={Homepage}/>
-          </Switch>
+          <Router basename="/" history={history}>
+              <Switch>
+                  <Route path="/" exact component={Homepage}/>
+              </Switch>
+          </Router>
       )
   }
 
