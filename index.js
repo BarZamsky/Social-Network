@@ -9,7 +9,8 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+
 app.use(bodyParser.json({ limit: '5mb', type: 'application/json' }));
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 

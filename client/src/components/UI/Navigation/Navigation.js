@@ -1,10 +1,12 @@
 import React from "react"
 import {NavLink} from "react-router-dom";
+import Logo from "../Logo"
 
-import '../../../App.css'
+import '../../../App.scss'
 
 const navigationBar = () => (
     <div className="toolbar">
+        <Logo />
         <nav>
             <ul className="navigation">
                 <li className="item">
@@ -29,6 +31,14 @@ const navigationBar = () => (
                         activeClassName="selectedLink"
                         strict>
                         Me
+                    </NavLink>
+                </li>
+                <li className="item">
+                    <NavLink
+                        to="/logout"
+                        activeClassName="selectedLink"
+                        strict>
+                        Logout
                     </NavLink>
                 </li>
             </ul>

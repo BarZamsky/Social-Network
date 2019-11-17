@@ -20,7 +20,7 @@ export const authenticate = async (req, res, next) => {
                 })
             }
             else {
-                logger.error('server error, %s', err)
+                logger.error('server error, %s', err.message)
                 return res.status(500).json({
                     status_code: statusCode.SERVER_ERROR,
                     error: err

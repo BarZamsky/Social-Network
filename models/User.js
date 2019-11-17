@@ -85,6 +85,12 @@ UserSchema.methods.removeToken = function (token) {
     });
 };
 
+UserSchema.methods.updateLastLogin  = function () {
+    const user = this;
+    user.lastLogin = new Date();
+    return user.save().then(() => {return user});
+};
+
 UserSchema.statics.findByToken = async function (token) {
     const User = this;
     let decoded;
@@ -121,12 +127,19 @@ UserSchema.statics.findByCredentials = function (email, password) {
             bcrypt.compare(password, user.password, (err, res) => {
                 if (err) {
                     reject({
-                        status_code: statusCode.PASSWORD_NOT_MATCH,
-                        error: true,
-                        msg: 'User not found'
+                        status_code: statusCode.LOGIN_FAILED,
+                        data: 'Login failed'
                     })
-                }
-                resolve(user)
+                } else if (!res) {
+                    resolve({
+                        status_code: statusCode.PASSWORD_NOT_MATCH,
+                        data: 'Wrong password'
+                    })
+                } else
+                    resolve({
+                        status_code: 0,
+                        data: user
+                    })
             });
         });
     });
