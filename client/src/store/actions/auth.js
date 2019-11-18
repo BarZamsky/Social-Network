@@ -54,7 +54,6 @@ export const signin = (email, password) => {
                 return;
             }
 
-            localStorage.setItem('user', res.data.data)
             localStorage.setItem('token', res.data.data.tokens[res.data.data.tokens.length -1].token)
             dispatch(authSuccess(res.data.data, res.data.data.tokens[res.data.data.tokens.length -1].token))
         });

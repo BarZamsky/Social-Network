@@ -2,15 +2,70 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Segoe UI Symbol";
-  background-color: #DCDCDC;
 }
 
-.toolbar {
-  height: 70px;
+/// homepage ////
+
+.homepage {
+  position: relative;
+  background: url('./assets/images/background.jpg') no-repeat center center/cover;
+  height: 100vh;
+}
+
+.homepage-dark-background {
+  height: 100%;
   width: 100%;
   top: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.homepage-inner {
+  height: 100%;
+  width: 80%;
+  color: #fff;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.homepage-link-wrapper {
+  display: flex;
+  margin-top: 30px;
+}
+
+.homepage-link {
+  text-decoration: none;
+  color: white;
+  margin: 5px;
+  height: 35px;
+  width: 70px;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 15px;
+  background-color: #008080;
+  border: 1px solid #008080;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.homepage-link:focus,
+.homepage-link:hover{
+  outline: none;
+}
+
+/// Toolbar ///
+
+.toolbar {
+  height: 56px;
+  width: 100%;
+  position: fixed;
+  top: 0;
   left: 0;
-  background-color: #778899;
+  background-color: #283e4a;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,47 +75,65 @@ body {
 }
 
 .logo {
-  height: 100%;
   box-sizing: border-box;
   border-radius: 5px;
+  height: 100%;
 }
 
 .logo img {
-  height: 100%;
+  height: 90%;
+  filter: brightness(0) invert(1);
 }
 
-.toolbar nav {
-  height: 100%;
-}
-
-.navigation {
+.toolbar-ul {
   margin: 0;
   padding: 0;
+  right: 0;
+  position: absolute;
   list-style: none;
   display: flex;
-  flex-flow: column;
-  text-align: center;
+  flex-flow: row;
+  align-items: center;
   height: 100%;
 }
 
-.item {
-  margin: 20px 13px;
-  box-sizing: border-box;
+.toolbar-li {
+  margin: 10px auto;
   display: block;
-}
-
-.item a {
-  color: #ffffff;
-  text-decoration: none;
+  align-content: center;
   width: 100%;
+  padding: 6px;
   box-sizing: border-box;
-  display: block;
+  transition: all 0.4s ease 0s;
 }
 
-.item a:hover,
-.item a:focus,
-.item a.active {
-  color: #000000;
+.toolbar-li:hover {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 1);
+  //-webkit-box-shadow: 0 5px 40px -10px rgba(0,0,0,0.57);
+  -moz-box-shadow: 0 5px 40px -10px rgba(0,0,0,0.57);
+  transition: all 0.4s ease 0s;
+}
+
+.toolbar-navlink {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  height: 50px;
+  color: #FFFFFF;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+.toolbar-navlink-selected {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 1);
+  -moz-box-shadow: 0 5px 40px -10px rgba(0,0,0,0.57);
+  transition: all 0.4s ease 0s;
+}
+
+.toolbar-icon {
+  margin-right: 5px;
+  padding: 3px;
 }
 
 //// Login ////
@@ -128,92 +201,180 @@ body {
 /// Register ///
 
 .register_wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: #DCDCDC;
+}
+
+.logo-container {
   text-align: center;
 }
 
-.register_logo {
-  height: 180px;
-  margin-top: 50px;
-  margin-bottom: 20px;
+.spinner-container {
   text-align: center;
+  margin-top: 50px;
+}
+
+.try-again-text {
+  margin-top: 15px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.register_logo {
+  height: 140px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   justify-content: center;
 }
 
 .register_form_wrapper {
   width: 500px;
+  height: 650px;
   padding: 30px;
   background: #FFFFFF;
-  margin: 50px auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.22);
-  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.22);
-  -webkit-box-shadow:  0 0 15px rgba(0, 0, 0, 0.22);
-}
-
-.register_form_wrapper h2{
-  background: #4D4D4D;
-  text-transform: uppercase;
-  font-family: 'Open Sans Condensed', sans-serif;
-  color: #797979;
-  font-size: 18px;
-  font-weight: 100;
-  padding: 20px;
-  margin: -30px -30px 30px -30px;
-}
-
-.register_form_wrapper input,
-.register_form_wrapper textarea,
-.register_form_wrapper select
-{
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  outline: none;
-  display: block;
-  width: 100%;
-  padding: 7px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  background: transparent;
-  margin-bottom: 10px;
-  font: 16px Arial, Helvetica, sans-serif;
-  height: 45px;
-}
-
-.register_birth_date {
+  margin: 90px auto;
   text-align: left;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  outline: none;
-  display: block;
-  width: 100%;
-  padding: 7px;
-  margin-bottom: 10px;
-  background: transparent;
-  border-bottom: 1px solid #ddd;
-  font: 16px Arial, Helvetica, sans-serif;
-  height: 45px;
+  box-shadow: 0 3px 10px -2px rgba(0,0,0,0.2);
 }
 
-.register_form_wrapper input[type="button"]{
-  -moz-box-shadow: inset 0 1px 0 0 #45D6D6;
-  -webkit-box-shadow: inset 0 1px 0 0 #45D6D6;
-  box-shadow: inset 0 1px 0 0 #45D6D6;
-  background-color: #2CBBBB;
-  border: 1px solid #27A0A0;
-  display: inline-block;
-  cursor: pointer;
-  color: #FFFFFF;
-  font-family: 'Open Sans Condensed', sans-serif;
-  font-size: 14px;
-  padding: 8px 18px;
-  text-decoration: none;
-  text-transform: uppercase;
-  margin-top: 20px;
+.register_form_wrapper h4 {
+  color: #008080;
 }
-.register_form_wrapper input[type="button"]:hover,
-.register_form_wrapper input[type="submit"]:hover {
-  background: #34CACA linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+
+.row {
+  zoom: 1;
+  &:before, &:after{
+    content: "";
+    display: table;
+  }
+  &:after{
+    clear: both;
+  }
+}
+
+.row.link {
+  margin-top: 10px;
+  color: #008080;
+}
+
+.input-group {
+  margin-bottom: 1em;
+  zoom: 1;
+  &:before, &:after{
+    content: "";
+    display: table;
+  }
+  &:after{
+    clear: both;
+  }
+}
+
+.input-field {
+  width: 95%;
+}
+
+.input-field i {
+    position: absolute;
+}
+
+.icon {
+  padding: 10px;
+  min-width: 50px;
+  margin-top: 5px;
+}
+
+.icon:after {
+  border-right: 1px solid #ccc;
+}
+
+.input-field input {
+  width: 90%;
+  height: 30px;
+  border: 1px solid #ccc;
+  padding: 8px 35px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+
+.input-field.err input {
+  border: 1px solid red;
+}
+
+.col {
+  padding-right: 10px;
+  float: left;
+  &:last-of-type {
+    padding-right: 0;
+  }
+}
+
+.col-half {
+  padding-right: 10px;
+  float: left;
+  &:last-of-type {
+    padding-right: 0;
+  }
+  width: 100% / 2;
+}
+
+.col-third {
+  padding-right: 10px;
+  float: left;
+  &:last-of-type {
+    padding-right: 0;
+  }
+  width: 100% / 3;
+}
+
+.col-third input {
+  width: 35px;
+  height: 30px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+
+.col-third input:focus,
+.col-third input:hover,
+.input-field input:focus,
+.input-field input:hover {
+  outline: none;
+  border: 1px solid #008080;
+}
+
+input[type="checkbox"]  {
+  padding-left:5px;
+  padding-right:5px;
+  border-radius:15px;
+  background-color: #008080;
+  color:#FFF;
+  white-space: nowrap;
+  overflow:hidden;
+  width:15px;
+  height:15px;
+}
+
+.register-btn {
+  margin-top: 20px;
+  width: 150px;
+  height: 45px;
+  padding: 5px;
+  background-color: #008080;
+  border: 1px solid #008080;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.register-btn:focus,
+.register-btn:hover {
+  outline: none;
 }
 
 @media (min-width: 600px) {

@@ -5,6 +5,8 @@ import Homepage from "./components/layout/Homepage"
 import Login from "./components/layout/Login"
 import Logout from "./components/layout/Logout"
 import Register from "./components/layout/Register"
+import Dashboard from "./components/dashboard/Dashboard"
+import Profile from "./components/profile/Profile"
 
 import * as actions from "./store/actions"
 
@@ -21,9 +23,10 @@ class App extends Component {
 
       let routes = (
           <Switch>
+              <Route path="/" exact component={Homepage}/>
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
-              <Redirect to='/login'/>
+              <Redirect to='/'/>
           </Switch>
       )
       if (this.props.isAuthenticated) {
@@ -32,6 +35,8 @@ class App extends Component {
                 <Route path="/" exact component={Homepage}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/logout" component={Logout}/>
+                <Route path="/dashboard" component={Dashboard}/>
+                <Route path="/profile" component={Profile}/>
             </Switch>
         )
       }

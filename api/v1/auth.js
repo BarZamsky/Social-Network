@@ -27,17 +27,21 @@ router.post('/signin', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     try {
-        const body = _.pick(req.body, ['fullName','email', 'password','birthDate', 'avatar']);
+        const body = _.pick(req.body, ['fullName','email', 'password','birthDate']);
         body['createdDate'] =  new Date()
         body['birthDate'] =  stringToDate(body['birthDate'], "dd/MM/yyyy", "/");
         body['lastLogin'] = "";
+        body['avatar'] = "";
 
         const user = new User(body);
         await user.save();
         const token = await user.generateAuthToken();
         res.header('x-auth', token).send(createResponse(0, user));
     } catch (e) {
-        res.status(400).send(createErrorResponse(statusCodes.SIGNUP_FAILED, e.message));
+        if (e.code === 11000)
+            res.status(200).send(createResponse(statusCodes.EMAIL_ALREADY_EXIST, "Email already exists"));
+        else
+            res.status(400).send(createErrorResponse(statusCodes.SIGNUP_FAILED, e.message));
     }
 });
 
