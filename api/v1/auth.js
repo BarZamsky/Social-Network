@@ -4,7 +4,7 @@ const express = require('express'),
     {User} = require('../../models/User'),
     statusCodes = require('../../utils/statusCodes'),
     {createResponse, createErrorResponse} = require('../../utils/createServerResponse'),
-    {stringToDate} = require('../../utils/dateUtils')
+    {stringToDate} = require('../../utils/dateUtils');
 
 router.post('/', async (req, res) => {
     try {

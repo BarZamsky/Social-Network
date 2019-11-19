@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
-const config = require('config')
+const config = require('config');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
-const statusCode = require('../utils/statusCodes')
+const statusCode = require('../utils/statusCodes');
 
 const Schema = mongoose.Schema;
 
@@ -176,4 +175,4 @@ UserSchema.pre('save', function (next) {
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = {User}
+module.exports = {User};

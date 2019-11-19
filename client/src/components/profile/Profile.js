@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import {connect} from "react-redux"
 import Navigation from "../UI/Navigation/Navigation"
 import ProfileHeader from "./ProfileHeader"
 
@@ -11,11 +12,17 @@ class Profile extends Component{
             <>
             <Navigation />
             <div className="profile_wrapper">
-                <ProfileHeader/>
+                <ProfileHeader user={this.props.user}/>
             </div>
             </>
         )
     }
 }
 
-export default Profile
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user
+    }
+};
+
+export default connect(mapStateToProps)(Profile)
