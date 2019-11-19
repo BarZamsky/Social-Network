@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 const config = require('config')
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
@@ -93,8 +94,7 @@ UserSchema.methods.updateLastLogin  = function () {
 
 UserSchema.statics.findByToken = async function (token) {
     const User = this;
-    let decoded;
-    await jwt.verify(token, config.get('jwt_secret'), (err, decoded) => {
+    return await jwt.verify(token, 'my_jwt', async (err, decoded) => {
         if(err) {
             return {
                 status_code: statusCode.INVALID_TOKEN,
@@ -103,11 +103,24 @@ UserSchema.statics.findByToken = async function (token) {
             }
         }
 
-        return User.findOne({
+        const user = await User.findOne({
             '_id': decoded._id,
             'tokens.token': token,
             'tokens.access': 'auth'
         });
+
+        if (!user) {
+            return {
+                status_code: statusCode.USER_NOT_FOUND,
+                data: 'User not found'
+            };
+        }
+
+        user._doc['password'] = '';
+        return {
+            status_code: 0,
+            data: user._doc
+        }
     });
 };
 

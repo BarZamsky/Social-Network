@@ -24,7 +24,6 @@ export const authFail = (err) => {
 
 export const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
@@ -53,8 +52,8 @@ export const signin = (email, password) => {
                 dispatch(authFail("User not found"));
                 return;
             }
-
-            localStorage.setItem('token', res.data.data.tokens[res.data.data.tokens.length -1].token)
+            const expirationDate = new Date(new Date().getTime() + 3600*1000);
+            localStorage.setItem('token', res.data.data.tokens[res.data.data.tokens.length -1].token);
             dispatch(authSuccess(res.data.data, res.data.data.tokens[res.data.data.tokens.length -1].token))
         });
     }
@@ -67,14 +66,34 @@ export const setAuthRedirectPath = (path) => {
     }
 };
 
+const getUserByToken = async (token) => {
+
+    return await server.post("/auth", {token: token},  (err, res) => {
+        if (err) {
+            return;
+        }
+
+        if (res.data && res.data.status_code !== 0) {
+            return;
+        }
+
+        console.log(res.data.data);
+        return res.data.data;
+    })
+};
+
 export const authCheckState = () => {
-    return dispatch => {
+    return async dispatch => {
         const token = localStorage.getItem('token');
+        console.log("token", token);
         if (!token)
             dispatch(logout());
         else {
-            const user = localStorage.getItem('user');
-            dispatch(authSuccess(user, token));
+            const user = await getUserByToken(token);
+            if (!user)
+                dispatch(logout());
+            else
+                dispatch(authSuccess(user, token));
         }
     }
 };

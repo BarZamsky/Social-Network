@@ -1,13 +1,24 @@
-.profile-wrapper {
+.profile_wrapper {
+  background-color: #ccc;
+  margin-top: 56px;
   position: absolute;
-  top: 0;
   bottom: 0;
-  left: 0;
   right: 0;
-  display: flex;
+  left: 0;
+  top: 0;
+  align-content: center;
   align-items: center;
   justify-content: center;
-  margin-top: 56px;
-  //background-color: rgba(236,239,242,1);
-  background-color: red;
+
+}
+
+.profile_header_wrapper {
+  background-color: white;
+  width: 750px;
+  height: 400px;
+  padding: 30px;
+  margin: 30px auto;
+  text-align: left;
+  border-radius: 3px;
+  box-shadow: 0 3px 10px -2px rgba(0,0,0,0.4);
 }

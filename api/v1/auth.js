@@ -6,6 +6,19 @@ const express = require('express'),
     {createResponse, createErrorResponse} = require('../../utils/createServerResponse'),
     {stringToDate} = require('../../utils/dateUtils')
 
+router.post('/', async (req, res) => {
+    try {
+        const token = req.body['token'];
+        const response = await User.findByToken(token)
+        if (response.status_code === 0)
+            res.status(200).send(createResponse(0, response.data))
+        else
+            res.status(200).send(createResponse(response.status_code, response.data))
+    } catch (e) {
+        res.status(400).send(createErrorResponse(statusCodes.UNAUTHORIZED, e.message));
+    }
+});
+
 router.post('/signin', async (req, res) => {
     try {
         const body = _.pick(req.body, ['email', 'password']);

@@ -1,5 +1,7 @@
 import React, {Component} from "react"
 import Navigation from "../UI/Navigation/Navigation"
+import ProfileHeader from "./ProfileHeader"
+
 import classes from "./Profile.scss"
 
 class Profile extends Component{
@@ -9,8 +11,7 @@ class Profile extends Component{
             <>
             <Navigation />
             <div className="profile_wrapper">
-
-                <h1>cccc</h1>
+                <ProfileHeader/>
             </div>
             </>
         )

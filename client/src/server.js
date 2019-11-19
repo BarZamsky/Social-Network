@@ -15,7 +15,7 @@ class server {
     }
 
     post(uri, body, cb) {
-        axios({
+        return axios({
             method: "POST",
             url: this.baseurl + uri,
             data: body,

@@ -1,7 +1,7 @@
 import React from "react"
 
 const header = (props) => (
-  <div>
+  <div className="profile_header_wrapper">
 
   </div>
 );
