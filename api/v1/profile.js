@@ -22,8 +22,8 @@ router.post('/', async (req, res) => {
 
 router.post('/education', async (req, res) => {
     try {
-        const userId = _.pick(req.body, ['user']);
-        let profile = await Profile.getProfile(userId['user']);
+        const userId = req.body['user'];
+        let profile = await Profile.getProfile(userId);
         if (!profile) {
             res.send(createResponse(statusCodes.PROFILE_NOT_FOUND, "No profile found for give user"));
             return;
@@ -41,8 +41,8 @@ router.post('/education', async (req, res) => {
 
 router.post('/experience', async (req, res) => {
     try {
-        const userId = _.pick(req.body, ['user']);
-        let profile = await Profile.getProfile(userId['user']);
+        const userId = req.body['user'];
+        let profile = await Profile.getProfile(userId);
         if (!profile) {
             res.send(createResponse(statusCodes.PROFILE_NOT_FOUND, "No profile found for give user"));
             return;

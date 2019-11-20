@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import Navigation from "../UI/Navigation/Navigation"
 import ProfileHeader from "./ProfileHeader"
 
-import classes from "./Profile.scss"
+import "./Profile.scss"
 
 class Profile extends Component{
 
