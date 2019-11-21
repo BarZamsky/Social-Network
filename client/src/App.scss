@@ -154,8 +154,8 @@ body {
 }
 
 .login_logo {
-  height: 320px;
-  margin-bottom: 20px;
+  height: 200px;
+  margin-bottom: 40px;
 }
 
 .login_title {
@@ -167,7 +167,7 @@ body {
 }
 
 .login_input {
-  height: 45px;
+  height: 40px;
   text-align: left;
   border: 1px solid rgba(116,138,161,0.45);
   border-radius: 4px;
@@ -178,9 +178,16 @@ body {
   padding: 0 20px;
 }
 
+.login_input:hover,
+.login_input:focus {
+  outline: none;
+  border: 1px solid #008080;
+  border-radius: 4px;
+}
+
 .login_btn {
-  height: 45px;
-  width: 58%;
+  height: 40px;
+  width: 57%;
   margin-top: 10px;
   border: 1px solid rgba(116,138,161,0.45);
   border-radius: 4px;
@@ -208,6 +215,8 @@ body {
   bottom: 0;
   text-align: center;
   background-color: #DCDCDC;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .logo-container {
@@ -227,8 +236,7 @@ body {
 
 .register_logo {
   height: 140px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   justify-content: center;
 }
 
@@ -237,7 +245,7 @@ body {
   height: 650px;
   padding: 30px;
   background: #FFFFFF;
-  margin: 90px auto;
+  margin: 60px auto;
   text-align: left;
   box-shadow: 0 3px 10px -2px rgba(0,0,0,0.2);
 }
@@ -247,7 +255,6 @@ body {
 }
 
 .row {
-  zoom: 1;
   &:before, &:after{
     content: "";
     display: table;
@@ -322,6 +329,10 @@ body {
   width: 100% / 2;
 }
 
+.col-half.right {
+  margin-left: 50px;
+}
+
 .col-third {
   padding-right: 10px;
   float: left;
@@ -329,6 +340,16 @@ body {
     padding-right: 0;
   }
   width: 100% / 3;
+}
+
+.col-third.middle {
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.col-third.number input {
+  width: 60px;
+  height: 30px;
 }
 
 .col-third input {
@@ -361,7 +382,7 @@ input[type="checkbox"]  {
 }
 
 .register-btn {
-  margin-top: 20px;
+  margin-top: 10px;
   width: 150px;
   height: 45px;
   padding: 5px;

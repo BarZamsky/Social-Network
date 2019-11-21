@@ -15,6 +15,8 @@ class Register extends Component{
         dd:null,
         mm:null,
         yyyy:null,
+        phone1:null,
+        phone2:null,
         loading: false,
         error: false,
         errorMessage: "Something went wrong with your request",
@@ -30,6 +32,8 @@ class Register extends Component{
             dd:null,
             mm:null,
             yyyy:null,
+            phone1:null,
+            phone2:null,
             loading: false,
             error: false,
             errorMessage: "Something went wrong with your request",
@@ -53,7 +57,8 @@ class Register extends Component{
                 fullName: this.state.fullName,
                 email: this.state.email,
                 password: this.state.password,
-                birthDate: birthDate
+                birthDate: birthDate,
+                phoneNumber: this.state.phone1+"-"+this.state.phone2
             };
 
             server.post("/auth/register", body, (err, res) => {
@@ -145,6 +150,18 @@ class Register extends Component{
                             </div>
                             <div className="col-third">
                                 <input id="yyyy" type="text" placeholder="YYYY" onChange={this.onChangeHandler} autoComplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-half right">
+                        <h4>Phone Number</h4>
+                        <div className="input-group">
+                            <div className="col-third">
+                                <input id="phone1" type="text" placeholder="999" onChange={this.onChangeHandler} autoComplete="off"/>
+                            </div>
+                            <div className="col-third middle">-</div>
+                            <div className="col-third number">
+                                <input id="phone2" type="text" placeholder="9999999" onChange={this.onChangeHandler} autoComplete="off"/>
                             </div>
                         </div>
                     </div>

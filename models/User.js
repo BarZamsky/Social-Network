@@ -54,6 +54,9 @@ const UserSchema = new Schema({
     avatar: {
         type: String
     },
+    phoneNumber: {
+        type: String
+    },
     tokens: [UserSubSchema]
 });
 

@@ -154,3 +154,52 @@
   margin-top: 60px;
   margin-left: 35px;
 }
+
+.contact_info_wrapper {
+  position: relative;
+}
+
+.contact_info_header {
+  height: 45px;
+  border-bottom: 1px solid #008080;
+}
+
+.contact_info_title {
+  padding: 7px;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.contact_info_edit_img {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 0;
+}
+
+.contact_info_group {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 8px;
+}
+
+.contact_info_group:last-child {
+  margin-bottom: 10px;
+}
+.contact_info_label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.contact_info_edit_img {
+  position: absolute;
+  right: 5%;
+  top: 18%;
+}
+
+@media (min-width: 600px) {
+  .profile_box_wrapper {
+    width: 56%;
+  }
+}

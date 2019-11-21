@@ -43,7 +43,9 @@ class Profile extends Component{
 
             {this.state.showModal ?
                 <Modal show onCloseModal={this.onCloseModal}>
-                    <ContactInfo onClickSave={this.onClickSave}/>
+                    <ContactInfo
+                        user={this.props.user}
+                        onClickSave={this.onClickSave}/>
                 </Modal> : null}
             </>
         )

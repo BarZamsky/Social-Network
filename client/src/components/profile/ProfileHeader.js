@@ -15,7 +15,7 @@ const header = (props) => {
                     <div className="profile_edit_img">
                         <img className="edit_icon" src={require("../../assets/images/edit.jpg")} alt="edit"/>
                     </div>
-                    <div className="contact_info" onClick={props.onClickContactInfo}>Contact info</div>
+                    <div className="contact_info" onClick={props.onClickContactInfo}>Contact Info</div>
                 </div>
                 <div className="profile_info_left">
                     <div className="info_name">{props.user.fullName}</div>

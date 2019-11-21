@@ -40,7 +40,7 @@ router.post('/signin', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     try {
-        const body = _.pick(req.body, ['fullName','email', 'password','birthDate']);
+        const body = _.pick(req.body, ['fullName','email', 'password','birthDate', 'phoneNumber']);
         body['createdDate'] =  new Date()
         body['birthDate'] =  stringToDate(body['birthDate'], "dd/MM/yyyy", "/");
         body['lastLogin'] = "";
