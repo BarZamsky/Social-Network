@@ -67,7 +67,7 @@ UserSchema.methods.generateAuthToken = function () {
     const user = this;
     const access = 'auth';
     //TODO: Replace the '' to process.env.JWT_SECRET
-    const token = jwt.sign({_id: user._id.toHexString(), access}, 'my_jwt').toString();
+    const token = jwt.sign({_id: user._id.toHexString(), access}, config.get("SECRET_KEY")).toString();
     user.tokens.push({access, token});
 
     return user.save()
@@ -93,7 +93,7 @@ UserSchema.methods.updateLastLogin  = function () {
 
 UserSchema.statics.findByToken = async function (token) {
     const User = this;
-    return await jwt.verify(token, 'my_jwt', async (err, decoded) => {
+    return await jwt.verify(token, config.get("SECRET_KEY"), async (err, decoded) => {
         if(err) {
             return {
                 status_code: statusCode.INVALID_TOKEN,
