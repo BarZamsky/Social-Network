@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const config = require('config')
+const config = require('config');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
-const statusCode = require('../utils/statusCodes')
+const statusCode = require('../utils/statusCodes');
 
 const Schema = mongoose.Schema;
 
@@ -85,10 +85,15 @@ UserSchema.methods.removeToken = function (token) {
     });
 };
 
+UserSchema.methods.updateLastLogin  = function () {
+    const user = this;
+    user.lastLogin = new Date();
+    return user.save().then(() => {return user});
+};
+
 UserSchema.statics.findByToken = async function (token) {
     const User = this;
-    let decoded;
-    await jwt.verify(token, config.get('jwt_secret'), (err, decoded) => {
+    return await jwt.verify(token, 'my_jwt', async (err, decoded) => {
         if(err) {
             return {
                 status_code: statusCode.INVALID_TOKEN,
@@ -97,11 +102,24 @@ UserSchema.statics.findByToken = async function (token) {
             }
         }
 
-        return User.findOne({
+        const user = await User.findOne({
             '_id': decoded._id,
             'tokens.token': token,
             'tokens.access': 'auth'
         });
+
+        if (!user) {
+            return {
+                status_code: statusCode.USER_NOT_FOUND,
+                data: 'User not found'
+            };
+        }
+
+        user._doc['password'] = '';
+        return {
+            status_code: 0,
+            data: user._doc
+        }
     });
 };
 
@@ -121,12 +139,19 @@ UserSchema.statics.findByCredentials = function (email, password) {
             bcrypt.compare(password, user.password, (err, res) => {
                 if (err) {
                     reject({
-                        status_code: statusCode.PASSWORD_NOT_MATCH,
-                        error: true,
-                        msg: 'User not found'
+                        status_code: statusCode.LOGIN_FAILED,
+                        data: 'Login failed'
                     })
-                }
-                resolve(user)
+                } else if (!res) {
+                    resolve({
+                        status_code: statusCode.PASSWORD_NOT_MATCH,
+                        data: 'Wrong password'
+                    })
+                } else
+                    resolve({
+                        status_code: 0,
+                        data: user
+                    })
             });
         });
     });
@@ -150,4 +175,4 @@ UserSchema.pre('save', function (next) {
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = {User}
+module.exports = {User};

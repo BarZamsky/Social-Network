@@ -5,10 +5,10 @@ const createResponse = (statusCode, data) => {
     }
 }
 
-const createErrorResponse = (statusCode, err) => {
+const createErrorResponse = (statusCode, errMessage) => {
     return {
         status_code: statusCode,
-        error: err
+        error: errMessage
     }
 }
 

@@ -1,0 +1,156 @@
+.profile_wrapper {
+  background-color: #ccc;
+  margin-top: 56px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.profile_box_wrapper {
+  background-color: white;
+  position: relative;
+  width: 40%;
+  height: 400px;
+  margin: 30px auto 10px auto;
+  text-align: left;
+  border-radius: 3px;
+  box-shadow: 0 3px 10px -2px rgba(0,0,0,0.4);
+}
+
+.profile_image {
+  position: absolute;
+  width: 100%;
+  height: 180px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.profile_name_circle {
+  position:absolute;
+  height: 150px;
+  width: 150px;
+  left: 35px;
+  margin-top: 85px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  box-shadow: 0 3px 10px -2px rgba(0,0,0,0.4);
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+  z-index:2
+}
+
+.profile_name_circle:hover,
+.profile_name_circle:focus {
+  background-color: #e2e8f0;
+}
+
+.circle_name {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 50px;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: Calibri;
+  color: #008080;
+  z-index:4;
+}
+
+.profile_info {
+  width: 100%;
+  height: 230px;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+
+.profile_info_left {
+  position: absolute;
+  left: 0;
+}
+
+.profile_info_right {
+  position: absolute;
+  margin-right: 20px;
+  margin-top: 20px;
+  right: 0;
+}
+
+.info_name {
+  font-family: Gisha;
+  margin-top: 90px;
+  margin-left: 35px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.info_data {
+  font-family: Gisha;
+  margin-top: 20px;
+  margin-left: 35px;
+  font-size: 15px;
+}
+
+.info_data:last-child {
+  margin-top: 8px;
+}
+
+.profile_edit_img {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  right: 0;
+}
+
+.edit_icon {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  position: absolute;
+  padding: 11px;
+  right: 0;
+}
+
+.contact_info {
+  color: #1E90FF;
+  font-weight: bold;
+  font-family: Gisha;
+  margin-top: 95px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.profile_edit_img:focus,
+.profile_edit_img:hover {
+  background-color: #edf2f7;
+  border-radius: 50%;
+}
+
+.profile_box_wrapper.about {
+  height: 120px;
+  margin: 5px auto 15px auto;
+}
+
+.about_title {
+  position: absolute;
+  margin-left: 35px;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 25px;
+}
+
+.about_body {
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 35px;
+}

@@ -1,0 +1,384 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Gisha;
+}
+
+/// homepage ////
+
+.homepage {
+  position: relative;
+  background: url('./assets/images/background.jpg') no-repeat center center/cover;
+  height: 100vh;
+}
+
+.homepage-dark-background {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.homepage-inner {
+  height: 100%;
+  width: 80%;
+  color: #fff;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.homepage-link-wrapper {
+  display: flex;
+  margin-top: 30px;
+}
+
+.homepage-link {
+  text-decoration: none;
+  color: white;
+  margin: 5px;
+  height: 35px;
+  width: 70px;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 15px;
+  background-color: #008080;
+  border: 1px solid #008080;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.homepage-link:focus,
+.homepage-link:hover{
+  outline: none;
+}
+
+/// Toolbar ///
+
+.toolbar {
+  height: 56px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #283e4a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 90;
+}
+
+.logo {
+  box-sizing: border-box;
+  border-radius: 5px;
+  height: 100%;
+}
+
+.logo img {
+  height: 90%;
+  filter: brightness(0) invert(1);
+}
+
+.toolbar-ul {
+  margin: 0;
+  padding: 0;
+  right: 0;
+  position: absolute;
+  list-style: none;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  height: 100%;
+}
+
+.toolbar-li {
+  margin: 10px auto;
+  display: block;
+  align-content: center;
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  transition: all 0.4s ease 0s;
+}
+
+.toolbar-li:hover {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 1);
+  //-webkit-box-shadow: 0 5px 40px -10px rgba(0,0,0,0.57);
+  -moz-box-shadow: 0 5px 40px -10px rgba(0,0,0,0.57);
+  transition: all 0.4s ease 0s;
+}
+
+.toolbar-navlink {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  height: 50px;
+  color: #FFFFFF;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+.toolbar-navlink-selected {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 1);
+  -moz-box-shadow: 0 5px 40px -10px rgba(0,0,0,0.57);
+  transition: all 0.4s ease 0s;
+}
+
+.toolbar-icon {
+  margin-right: 5px;
+  padding: 3px;
+}
+
+//// Login ////
+.login_wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(236,239,242,1);
+}
+
+.login_center {
+  text-align: center;
+}
+
+.login_logo {
+  height: 320px;
+  margin-bottom: 20px;
+}
+
+.login_title {
+  color: #112C41;
+  font-size: 20px;
+  letter-spacing: 0.22px;
+  line-height: 26px;
+  margin-bottom: 20px;
+}
+
+.login_input {
+  height: 45px;
+  text-align: left;
+  border: 1px solid rgba(116,138,161,0.45);
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  width: 50%;
+  font-size: 18px;
+  margin-bottom: 10px;
+  padding: 0 20px;
+}
+
+.login_btn {
+  height: 45px;
+  width: 58%;
+  margin-top: 10px;
+  border: 1px solid rgba(116,138,161,0.45);
+  border-radius: 4px;
+  color: white;
+  font-size: 18px;
+  background-color: #778899;
+  cursor: pointer;
+}
+
+.login_btn:focus{
+  outline: none;
+}
+
+.login_label {
+  margin-top: 7px;
+}
+
+/// Register ///
+
+.register_wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: #DCDCDC;
+}
+
+.logo-container {
+  text-align: center;
+}
+
+.spinner-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.try-again-text {
+  margin-top: 15px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.register_logo {
+  height: 140px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.register_form_wrapper {
+  width: 500px;
+  height: 650px;
+  padding: 30px;
+  background: #FFFFFF;
+  margin: 90px auto;
+  text-align: left;
+  box-shadow: 0 3px 10px -2px rgba(0,0,0,0.2);
+}
+
+.register_form_wrapper h4 {
+  color: #008080;
+}
+
+.row {
+  zoom: 1;
+  &:before, &:after{
+    content: "";
+    display: table;
+  }
+  &:after{
+    clear: both;
+  }
+}
+
+.row.link {
+  margin-top: 10px;
+  color: #008080;
+}
+
+.input-group {
+  margin-bottom: 1em;
+  zoom: 1;
+  &:before, &:after{
+    content: "";
+    display: table;
+  }
+  &:after{
+    clear: both;
+  }
+}
+
+.input-field {
+  width: 95%;
+}
+
+.input-field i {
+    position: absolute;
+}
+
+.icon {
+  padding: 10px;
+  min-width: 50px;
+  margin-top: 5px;
+}
+
+.icon:after {
+  border-right: 1px solid #ccc;
+}
+
+.input-field input {
+  width: 90%;
+  height: 30px;
+  border: 1px solid #ccc;
+  padding: 8px 35px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+
+.input-field.err input {
+  border: 1px solid red;
+}
+
+.col {
+  padding-right: 10px;
+  float: left;
+  &:last-of-type {
+    padding-right: 0;
+  }
+}
+
+.col-half {
+  padding-right: 10px;
+  float: left;
+  &:last-of-type {
+    padding-right: 0;
+  }
+  width: 100% / 2;
+}
+
+.col-third {
+  padding-right: 10px;
+  float: left;
+  &:last-of-type {
+    padding-right: 0;
+  }
+  width: 100% / 3;
+}
+
+.col-third input {
+  width: 35px;
+  height: 30px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+
+.col-third input:focus,
+.col-third input:hover,
+.input-field input:focus,
+.input-field input:hover {
+  outline: none;
+  border: 1px solid #008080;
+}
+
+input[type="checkbox"]  {
+  padding-left:5px;
+  padding-right:5px;
+  border-radius:15px;
+  background-color: #008080;
+  color:#FFF;
+  white-space: nowrap;
+  overflow:hidden;
+  width:15px;
+  height:15px;
+}
+
+.register-btn {
+  margin-top: 20px;
+  width: 150px;
+  height: 45px;
+  padding: 5px;
+  background-color: #008080;
+  border: 1px solid #008080;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.register-btn:focus,
+.register-btn:hover {
+  outline: none;
+}
+
+@media (min-width: 600px) {
+  .navigation {
+    flex-flow: row;
+  }
+}
