@@ -20,8 +20,8 @@ npm run build
 
 ## Quick Start
 ```bash
-Markup : * In the /config folder, create a file called default.json
-         * Change the MONGO_URL into your own MongoDB url
+* In the /config folder, create a file called default.json
+* Change the MONGO_URL into your own MongoDB url
 ```
 
 ## Author
