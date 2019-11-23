@@ -11,7 +11,8 @@ import "./Profile.scss"
 class Profile extends Component{
 
     state = {
-        showModal: false
+        showModal: false,
+        editContact: false
     };
 
     onClickEditHandler = () => {
@@ -19,6 +20,12 @@ class Profile extends Component{
     };
 
     onClickContactInfo = () => {this.setState({showModal: true})};
+
+    switchContactInfoMode = () => {
+        this.setState(prevState => ({
+            editContact: !prevState.editContact
+        }))
+    };
 
     onCloseModal = () => {this.setState({showModal: false})};
 
@@ -45,7 +52,9 @@ class Profile extends Component{
                 <Modal show onCloseModal={this.onCloseModal}>
                     <ContactInfo
                         user={this.props.user}
-                        onClickSave={this.onClickSave}/>
+                        onClickSave={this.onClickSave}
+                        switchContactInfoMode={this.switchContactInfoMode}
+                        editMode={this.state.editContact}/>
                 </Modal> : null}
             </>
         )
