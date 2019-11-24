@@ -1,5 +1,6 @@
 const express = require('express'),
     router = express.Router(),
+    logger = require("../../middleware/logger"),
     _ = require('lodash'),
     {User} = require('../../models/User'),
     statusCodes = require('../../utils/statusCodes'),
@@ -11,10 +12,11 @@ router.post('/', async (req, res) => {
         const token = req.body['token'];
         const response = await User.findByToken(token)
         if (response.status_code === 0)
-            res.status(200).send(createResponse(0, response.data))
+            res.status(200).send(createResponse(0, response.data));
         else
             res.status(200).send(createResponse(response.status_code, response.data))
     } catch (e) {
+        logger.error(e.message);
         res.status(400).send(createErrorResponse(statusCodes.UNAUTHORIZED, e.message));
     }
 });
@@ -34,6 +36,7 @@ router.post('/signin', async (req, res) => {
         res.header('x-auth', token)
             .send(createResponse(0, user._doc));
     } catch (e) {
+        logger.error(e.message);
         res.status(400).send(createErrorResponse(statusCodes.LOGIN_FAILED, e));
     }
 });
@@ -44,13 +47,12 @@ router.post('/register', async (req, res) => {
         body['createdDate'] =  new Date()
         body['birthDate'] =  stringToDate(body['birthDate'], "dd/MM/yyyy", "/");
         body['lastLogin'] = "";
-        body['avatar'] = "";
-
         const user = new User(body);
         await user.save();
         const token = await user.generateAuthToken();
         res.header('x-auth', token).send(createResponse(0, user));
     } catch (e) {
+        logger.error(e.message);
         if (e.code === 11000)
             res.status(200).send(createResponse(statusCodes.EMAIL_ALREADY_EXIST, "Email already exists"));
         else

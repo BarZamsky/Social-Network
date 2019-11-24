@@ -1,20 +1,23 @@
 .Modal {
-  position: fixed;
   z-index: 500;
-  background-color: white;
-  width: 70%;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  box-shadow: 0 3px 10px -2px rgba(0,0,0,0.2);
-  left: 15%;
-  top: 15%;
-  box-sizing: border-box;
-  transition: all 0.3s ease-out;
+  margin: 120px auto;
+  background: #fff;
+  border-radius: 5px;
+  position: relative;
+  transition: all 5s ease-in-out;
 }
 
-@media (min-width: 600px) {
-  .Modal {
-    width: 500px;
-    left: calc(50% - 250px);
-  }
+.Modal.contactInfo {
+  width: 500px;
 }
+
+.Modal.editIntro {
+  width: 700px;
+}
+
+//@media (min-width: 1600px) {
+//  .Modal {
+//    width: 500px;
+//    left: calc(50% - 250px);
+//  }
+//}

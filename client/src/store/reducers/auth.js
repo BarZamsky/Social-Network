@@ -27,15 +27,15 @@ const authFail = (state, action) => {
         error: action.error,
         loading: false
     })
-}
+};
 
 const logout = (state, action) => {
     return updateObject(state, {user: null, token: null})
-}
+};
 
 const setAuthRedirectPath = (state, action) => {
     return updateObject(state, {authRedirectPath: action.path})
-}
+};
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -47,6 +47,6 @@ const reducer = (state = initialState, action) => {
         default:
             return state;
     }
-}
+};
 
 export default reducer;

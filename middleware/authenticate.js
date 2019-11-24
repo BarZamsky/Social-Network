@@ -1,44 +1,28 @@
 const {User} = require('../models/User');
-const logger = require('./logger')
-const statusCode = require('../utils/statusCodes')
+const logger = require('./logger');
+const statusCode = require('../utils/statusCodes');
+const {createResponse, createErrorResponse} = require('../utils/createServerResponse');
 
-export const authenticate = async (req, res, next) => {
-    const token = req.header('x-auth');
+module.exports = async (req, res, next) => {
+    const token = req.headers["x-access-token"] || req.headers["authorization"];
     if (!token)
-        return res.status(401).json({
-            status_code: statusCode.UNAUTHORIZED,
-            error: 'Unauthorized, access denied'
-        })
+        return res.status(401)
+            .json(createErrorResponse(statusCode.UNAUTHORIZED,'Unauthorized, access denied'));
 
-    const user = await User.findByToken(token, (err, user) => {
-        if (err) {
-            if(err.statusCode === statusCode.INVALID_TOKEN) {
-                logger.debug('Invalid token, %s', token)
-                res.status(401).json({
-                    status_code: statusCode.INVALID_TOKEN,
-                    error: err.msg
-                })
-            }
-            else {
-                logger.error('server error, %s', err.message)
-                return res.status(500).json({
-                    status_code: statusCode.SERVER_ERROR,
-                    error: err
-                })
-            }
-        }
+    const response = await User.findByToken(token);
+    if(response.status_code === statusCode.INVALID_TOKEN) {
+        logger.debug('Invalid token, '+ response.message);
+        res.status(401)
+            .json(createErrorResponse(statusCode.INVALID_TOKEN, response.message));
+    } else if (response.status_code === statusCode.USER_NOT_FOUND){
+        logger.debug('user not found');
+        return res.status(404)
+            .json(createErrorResponse(statusCode.USER_NOT_FOUND, 'user not found'));
+    }
 
-        if (!user) {
-            logger.error('No user found for token %s', token)
-            return res.status(401).json({
-                status_code: statusCode.USER_NOT_FOUND,
-                error: 'No user found for given token'
-            })
-        }
-
-        logger.debug('Found user for token %s', token)
-        req.user = user;
-        req.token = token;
-        next();
-    })
+    logger.debug('Authorized user, '+response.data["_id"]);
+    req.user = response.data;
+    req.token = token;
+    next();
 };
+

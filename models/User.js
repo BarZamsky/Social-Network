@@ -20,6 +20,18 @@ const UserSubSchema = new mongoose.Schema({
     _id: false
 });
 
+const AvatarSchema = new mongoose.Schema({
+    imageName: {
+        type: String,
+        default: "none",
+        required: true
+    },
+    imageData: {
+        type: String,
+        required: true
+    }
+});
+
 const UserSchema = new Schema({
     fullName: {
         type: String,
@@ -51,12 +63,10 @@ const UserSchema = new Schema({
     lastLogin: {
         type: Date
     },
-    avatar: {
-        type: String
-    },
     phoneNumber: {
         type: String
     },
+    avatar: AvatarSchema,
     tokens: [UserSubSchema]
 });
 
@@ -88,6 +98,15 @@ UserSchema.methods.removeToken = function (token) {
     });
 };
 
+UserSchema.methods.updateAvatar = function (image) {
+  const user = this;
+  user.avatar = image;
+    return user.save()
+        .then(() => {
+            return user;
+        });
+};
+
 UserSchema.methods.updateLastLogin  = function () {
     const user = this;
     user.lastLogin = new Date();
@@ -100,8 +119,7 @@ UserSchema.statics.findByToken = async function (token) {
         if(err) {
             return {
                 status_code: statusCode.INVALID_TOKEN,
-                error: true,
-                msg: 'Invalid token'
+                message: err.message
             }
         }
 

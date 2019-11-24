@@ -8,17 +8,17 @@ const info = (props) => {
     if (props.editMode) {
         contactInfo = (
             <div>
-                <div className="contact_info_cancel_icon" onClick={props.switchContactInfoMode}>
-                    <img className="cancel_icon" src={require("../../assets/images/cancel.png")} alt="edit"/>
+                <div className="contact_info_cancel" onClick={props.switchContactInfoMode}>
+                    <div className="cancel">Cancel</div>
                 </div>
                 <div className="contact_info_head">Edit your info</div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">GitHub</div>
-                    <input className="contact_info_input" placeholder="GitHub URL" onChange={props.onChangeContactInfoHandler}/>
+                    <input id="gitUrl" className="contact_info_input" placeholder="GitHub URL" onChange={props.onChangeHandler}/>
                 </div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">Personal Website</div>
-                    <input className="contact_info_input" placeholder="Personal Website" onChange={props.onChangeContactInfoHandler}/>
+                    <input id="website" className="contact_info_input" placeholder="Personal Website" onChange={props.onChangeHandler}/>
                 </div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">Birth Date</div>
@@ -35,13 +35,13 @@ const info = (props) => {
                     <label>{props.user.email}</label>
                 </div>
                 <div style={{'position':'absolute','bottom':'3%','right':'3%'}}>
-                    <button className="contact_info_save_btn">Save changes</button>
+                    <button className="contact_info_save_btn" onClick={props.onClickSaveInfoHandler}>Save changes</button>
                 </div>
             </div>
         )
     } else {
         contactInfo = (
-            <div style={{'overflow': 'scroll', 'overflow-x': 'hidden', 'margin-top': '5px'}}>
+            <div style={{'overflow': 'scroll', 'overflowX': 'hidden', 'marginTop': '5px'}}>
                 <div className="contact_info_edit_img" onClick={props.switchContactInfoMode}>
                     <img className="edit_icon" src={require("../../assets/images/edit.jpg")} alt="edit"/>
                 </div>

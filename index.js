@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('./middleware/logger');
-const connectDB = require('./config/db')
-const routes = require('./api/v1')
-const cors = require('cors')
+const connectDB = require('./config/db');
+const routes = require('./api/v1');
+const cors = require('cors');
 
 const app = express();
 

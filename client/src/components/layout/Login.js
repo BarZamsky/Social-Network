@@ -24,8 +24,8 @@ class Login extends Component{
     render() {
 
         let authRedirect = null;
-        if (this.props.isAuthenticated)
-            authRedirect = <Redirect to={this.props.authRedirectPath}/>;
+        if (!this.props.isAuthenticated)
+            authRedirect = <Redirect to={this.props.loginRedirectPath}/>;
 
         let errorMessage = null;
 

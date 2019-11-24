@@ -52,7 +52,7 @@ export const signin = (email, password) => {
                 dispatch(authFail("User not found"));
                 return;
             }
-            const expirationDate = new Date(new Date().getTime() + 3600*1000);
+            // const expirationDate = new Date(new Date().getTime() + 3600*1000);
             localStorage.setItem('token', res.data.data.tokens[res.data.data.tokens.length -1].token);
             dispatch(authSuccess(res.data.data, res.data.data.tokens[res.data.data.tokens.length -1].token))
         });
@@ -76,8 +76,6 @@ const getUserByToken = async (token) => {
         if (res.data && res.data.status_code !== 0) {
             return;
         }
-
-        console.log(res.data.data);
         return res.data.data;
     })
 };
@@ -85,7 +83,6 @@ const getUserByToken = async (token) => {
 export const authCheckState = () => {
     return async dispatch => {
         const token = localStorage.getItem('token');
-        console.log("token", token);
         if (!token)
             dispatch(logout());
         else {

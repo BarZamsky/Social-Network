@@ -71,8 +71,7 @@ const SocialSubSchema = new mongoose.Schema({
         type: String
     },
     website: {
-        type: String,
-        required: true
+        type: String
     },
     _id: false
 });
@@ -86,6 +85,15 @@ const ProfileSchema = new Schema({
         type: String
     },
     title: {
+        type: String
+    },
+    companyName: {
+        type: String
+    },
+    country: {
+        type: String
+    },
+    city: {
         type: String
     },
     about: {
@@ -113,6 +121,24 @@ ProfileSchema.methods.updateEducation = function (education) {
 ProfileSchema.methods.updateExperience = function (experience) {
     const profile = this;
     profile.experience.push(experience);
+    return profile.save()
+        .then(() => {
+            return profile;
+        })
+};
+
+ProfileSchema.methods.updateSocial = function (socialData) {
+    const profile = this;
+    profile.social.push(socialData);
+    return profile.save()
+        .then(() => {
+            return profile;
+        })
+};
+
+ProfileSchema.methods.updateAbout = function (about) {
+    const profile = this;
+    profile.about = about;
     return profile.save()
         .then(() => {
             return profile;

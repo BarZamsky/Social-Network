@@ -7,7 +7,6 @@ const Homepage = ({ isAuthenticated }) => {
         return <Redirect to="/dashboard"/>;
 
     return (
-
             <section className="homepage">
                 <div className="homepage-dark-background">
                     <div className="homepage-inner">
@@ -26,7 +25,7 @@ const Homepage = ({ isAuthenticated }) => {
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null && state.profile.error === null
 });
 
 export default connect(mapStateToProps)(Homepage)
