@@ -52,7 +52,6 @@ export const signin = (email, password) => {
                 dispatch(authFail("User not found"));
                 return;
             }
-            // const expirationDate = new Date(new Date().getTime() + 3600*1000);
             localStorage.setItem('token', res.data.data.tokens[res.data.data.tokens.length -1].token);
             dispatch(authSuccess(res.data.data, res.data.data.tokens[res.data.data.tokens.length -1].token))
         });
@@ -89,8 +88,10 @@ export const authCheckState = () => {
             const user = await getUserByToken(token);
             if (!user)
                 dispatch(logout());
-            else
+            else {
+                dispatch(setAuthRedirectPath("/dashboard"));
                 dispatch(authSuccess(user, token));
+            }
         }
     }
 };

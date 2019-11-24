@@ -4,7 +4,7 @@ const statusCode = require('../utils/statusCodes');
 const {createResponse, createErrorResponse} = require('../utils/createServerResponse');
 
 module.exports = async (req, res, next) => {
-    const token = req.headers["x-access-token"] || req.headers["authorization"];
+    const token = req.headers["x-auth"];
     if (!token)
         return res.status(401)
             .json(createErrorResponse(statusCode.UNAUTHORIZED,'Unauthorized, access denied'));

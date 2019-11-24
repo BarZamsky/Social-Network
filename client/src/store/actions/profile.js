@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes"
-import server from "../../server"
+import axios from "axios"
 
 export const profileStart = () => {
     return {
@@ -50,37 +50,39 @@ export const logout = () => {
 };
 
 export const getProfile = () => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(profileStart());
 
-        server.get("/profile", (err, res) => {
-            if (err) {
-                dispatch(getProfileFail(err.message));
-                return;
-            }
-
-            if (res.data && res.data.status_code === 1008) {
-                dispatch(emptyProfile());
-                return;
-            }
-
-            localStorage.setItem('userId', res.data.data.user);
-            dispatch(getProfileSuccess(res.data.data.profile, res.data.data.user))
+        const token = localStorage.getItem('token');
+        const response = await axios.get(process.env.REACT_APP_BACKEND_SERVER + "/profile", {
+            headers: {'x-auth': token},
+            withCredentials: true
         });
+
+        if (response.data && response.data.status_code === 1008) {
+            dispatch(emptyProfile());
+            return;
+        } else if (response.data.status_code !== 0) {
+            dispatch(getProfileFail(response.data.data));
+            return;
+        } else {
+            localStorage.setItem('userId', response.data.data.user);
+            dispatch(getProfileSuccess(response.data.data.profile, response.data.data.user))
+        }
     }
 };
 
 export const editProfileIntro = (body) => {
-    return dispatch => {
-        dispatch(profileStart());
-
-        server.post("/profile", body, (err, res) => {
-            if (err) {
-                dispatch(editProfileFail(err));
-                return;
-            }
-
-            dispatch(editProfileSuccess(res.data.profile))
-        });
-    }
+    // return dispatch => {
+    //     dispatch(profileStart());
+    //
+    //     server.post("/profile", body, (err, res) => {
+    //         if (err) {
+    //             dispatch(editProfileFail(err));
+    //             return;
+    //         }
+    //
+    //         dispatch(editProfileSuccess(res.data.profile))
+    //     });
+    // }
 };

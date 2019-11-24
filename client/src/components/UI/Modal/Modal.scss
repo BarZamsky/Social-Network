@@ -1,9 +1,9 @@
 .Modal {
-  z-index: 500;
-  margin: 120px auto;
-  background: #fff;
-  border-radius: 5px;
   position: relative;
+  min-height: 400px;
+  background: white;
+  z-index: 500;
+  border-radius: 6px;
   transition: all 5s ease-in-out;
 }
 
@@ -15,9 +15,9 @@
   width: 700px;
 }
 
-//@media (min-width: 1600px) {
-//  .Modal {
-//    width: 500px;
-//    left: calc(50% - 250px);
-//  }
-//}
+@media (min-width: 1600px) {
+  .Modal {
+    width: 500px;
+    left: calc(50% - 250px);
+  }
+}

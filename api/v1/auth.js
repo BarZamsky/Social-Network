@@ -10,7 +10,7 @@ const express = require('express'),
 router.post('/', async (req, res) => {
     try {
         const token = req.body['token'];
-        const response = await User.findByToken(token)
+        const response = await User.findByToken(token);
         if (response.status_code === 0)
             res.status(200).send(createResponse(0, response.data));
         else
@@ -37,14 +37,14 @@ router.post('/signin', async (req, res) => {
             .send(createResponse(0, user._doc));
     } catch (e) {
         logger.error(e.message);
-        res.status(400).send(createErrorResponse(statusCodes.LOGIN_FAILED, e));
+        res.status(400).send(createErrorResponse(statusCodes.LOGIN_FAILED, e.message));
     }
 });
 
 router.post('/register', async (req, res) => {
     try {
         const body = _.pick(req.body, ['fullName','email', 'password','birthDate', 'phoneNumber']);
-        body['createdDate'] =  new Date()
+        body['createdDate'] =  new Date();
         body['birthDate'] =  stringToDate(body['birthDate'], "dd/MM/yyyy", "/");
         body['lastLogin'] = "";
         const user = new User(body);

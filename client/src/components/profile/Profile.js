@@ -48,11 +48,6 @@ class Profile extends Component{
                 'content-type': 'multipart/form-data'
             }
         };
-        // axios.post("/upload",formData,config)
-        //     .then((response) => {
-        //         alert("The file is successfully uploaded");
-        //     }).catch((error) => {
-        // });
     };
 
     onClickEditIntroHandler = () => {
