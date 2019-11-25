@@ -7,7 +7,9 @@ import Modal from "../UI/Modal/Modal"
 import Spinner from "../UI/Spinner/Spinner"
 import ContactInfo from "./ContactInfo"
 import About from "./About"
+import EditAbout from "./EditAbout"
 import EditIntro from "./EditIntro"
+import axios from "axios"
 
 import "./Profile.scss"
 import * as actions from "../../store/actions";
@@ -31,23 +33,39 @@ class Profile extends Component{
         companyName: null,
         userName: null,
 
-        avatar: null
+        // about
+        about: null,
+
+        avatar: require("../../assets/images/default-avatar.png"),
+        error: false
     };
 
     componentDidMount() {
-        this.props.getProfile();
+        this.setState({avatar: this.props.profile && this.props.profile.avatar.imageData ? process.env.REACT_APP_BACKEND_SERVER+this.props.profile.avatar.imageData : require("../../assets/images/default-avatar.png")})
     }
 
-    onChangeFileHandler = (e) => {this.setState({avatar: e.target.files[0]})};
+    uploadImage = async e => {
+        const imageData = e.target.files[0];
+        this.setState({avatar: URL.createObjectURL(imageData)});
 
-    onSubmitAvatar = () => {
         const formData = new FormData();
-        formData.append('myImage',this.state.avatar);
-        const config = {
+        formData.append('imageName',"upload-"+Date.now());
+        formData.append('imageData', imageData);
+        const response = await axios({
+            method: 'POST',
+            url: process.env.REACT_APP_BACKEND_SERVER+'/avatar',
+            data: formData,
             headers: {
-                'content-type': 'multipart/form-data'
+                withCredentials: true,
+                'Content-Type': 'multipart/form-data',
+                'x-auth': this.props.token
             }
-        };
+        });
+
+        if (response.data.status_code !== 0)
+            this.setState({error: true});
+        else
+            this.props.getProfile();
     };
 
     onClickEditIntroHandler = () => {
@@ -70,11 +88,24 @@ class Profile extends Component{
 
     onClickSaveInfoHandler = () => {};
 
-    onChangeHandler = (e) => {this.setState({ [e.target.id]: e.target.value })};
+    editAboutHandler = async () => {
+        const body = {
+            about: this.state.about
+        };
 
-    editAboutHandler = () => {
+        const response = await axios.post(process.env.REACT_APP_BACKEND_SERVER+'/profile/about', body, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'x-auth': this.props.token
+            }
+        });
 
+        console.log(response);
+        this.props.getProfile();
     };
+
+    onChangeHandler = (e) => {this.setState({ [e.target.id]: e.target.value })};
 
     showModal = (mode) => {this.setState({showModal: true, modalMode: mode});};
 
@@ -83,7 +114,9 @@ class Profile extends Component{
     render() {
         let body ;
 
-        if (this.props.loading) {
+        if (this.state.error || this.props.error) {
+            body = (<div>Unexpected error.. try again</div>)
+        } else if (this.props.loading) {
             body = (
                 <Spinner/>
             )
@@ -93,10 +126,12 @@ class Profile extends Component{
                 <ProfileHeader
                     profile={this.props.profile}
                     user={this.props.user}
-                    showModal={this.showModal}/>
+                    showModal={this.showModal}
+                    uploadImage={this.uploadImage}
+                    avatar={this.state.avatar}/>
                 <About
-                    profile={this.props.profile}
-                    editAboutHandler={this.editAboutHandler}/>
+                    showModal={this.showModal}
+                    profile={this.props.profile}/>
                 </>
             )
         }
@@ -127,6 +162,15 @@ class Profile extends Component{
                             closeModal={this.closeModal}
                             onChangeHandler={this.onChangeHandler}/>
                     </Modal> : null}
+
+                {this.state.showModal && this.state.modalMode === 'about' ?
+                    <Modal show onCloseModal={this.closeModal} className="editAbout">
+                        <EditAbout
+                            editAboutHandler={this.editAboutHandler}
+                            profile={this.props.profile}
+                            closeModal={this.closeModal}
+                            onChangeHandler={this.onChangeHandler}/>
+                    </Modal> : null }
             </>
         )
     }
@@ -134,6 +178,7 @@ class Profile extends Component{
 
 const mapStateToProps = state => {
     return {
+        token: state.auth.token,
         user: state.auth.user,
         loading: state.profile.loading,
         profile: state.profile.profile,

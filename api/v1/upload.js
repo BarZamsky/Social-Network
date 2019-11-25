@@ -2,33 +2,50 @@ const express = require('express'),
     router = express.Router(),
     logger = require("../../middleware/logger"),
     multer = require('multer'),
-    {User} = require("../../models/User");
+    {Profile} = require("../../models/Profile"),
+    statusCodes = require('../../utils/statusCodes'),
+    authenticate = require('../../middleware/authenticate'),
+    path = require('path'),
+    {createResponse, createErrorResponse} = require("../../utils/createServerResponse");
+
+const myPath = path.join(__dirname, '../../uploads');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../../uploads')
+        cb(null, myPath)
     },
     filename: function (req, file, cb) {
-        cb(null,  Date.now() + file.originalName)
+        cb(null,  Date.now().toString() + file.originalname)
     }
 });
 
-const fileFilter = (req, file, cb) => {
-    if (file.mimeType === 'image/jpeg' || file.mimeType === 'image/png')
-        cb(null, true);
-    else
-        cb(null, false)
-};
-
 const upload = multer({
-   storage: storage,
-   limits: {
-       fileSize: 1024*1024*5
-   },
-   fileFilter: fileFilter
+   storage: storage
 });
 
-router.post('/uploadmulter', upload.single('imageData'), async (req, res) => {
-    const user = req['user'];
+router.post('/', authenticate, upload.single('imageData'), async (req, res) => {
+    try {
+        let userId = req['user']['_id'];
+        let profile = await Profile.getProfile(userId);
+        const filePath = "/uploads/"+req.file.filename;
+        if (!profile) {
+            const avatar = {
+                imageName:req.body.imageName,
+                imageData:filePath
+            };
+            profile = new Profile({
+                user: userId,
+                avatar: avatar
+            })
+            await profile.save();
+        } else {
+            profile = await profile.setAvatar(req.body.imageName, filePath);
 
+        }
+        res.send(createResponse(0, profile._doc));
+    } catch (e) {
+        res.send(createErrorResponse(statusCodes.ERROR, e.message));
+    }
 });
+
+module.exports = router;

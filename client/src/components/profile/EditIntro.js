@@ -12,7 +12,7 @@ const editIntro = (props) => {
               </div>
           </div>
 
-          <div style={{'overflow':'scroll', 'overflowX':'hidden','marginTop':'13px'}}>
+          <div style={{'overflow':'scroll', 'overflowX':'hidden','marginTop':'8px'}}>
               <div className="edit_general">
                   <div className="edit_group_label">General information</div>
                   <div className="edit_intro_group">
@@ -24,18 +24,18 @@ const editIntro = (props) => {
                           autoComplete="off"
                           onChange={props.onChangeHandler}/>
                   </div>
+                  <div className="edit_intro_group">
+                      <div className="edit_intro_label">Title</div>
+                      <input
+                          className="edit_intro_item"
+                          id="title"
+                          placeholder={props.title ? props.title : "Job Title"}
+                          autoComplete="off"
+                          onChange={props.onChangeHandler}/>
+                  </div>
               </div>
 
               <div className="edit_group_label">Current job information</div>
-              <div className="edit_intro_group">
-                  <div className="edit_intro_label">Title</div>
-                  <input
-                      className="edit_intro_item"
-                      id="title"
-                      placeholder={props.title ? props.title : "Job Title"}
-                      autoComplete="off"
-                      onChange={props.onChangeHandler}/>
-              </div>
               <div className="edit_intro_group">
                   <div className="edit_intro_label">Company Name</div>
                   <input

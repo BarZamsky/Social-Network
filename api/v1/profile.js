@@ -21,7 +21,7 @@ router.post('/', authenticate, async (req, res) => {
         res.send(createResponse(0, profile));
     } catch (e) {
         logger.error(e.message);
-        res.status(400).send(createErrorResponse(statusCodes.ERROR, e.message));
+        res.status(200).send(createErrorResponse(statusCodes.ERROR, e.message));
     }
 });
 
@@ -36,17 +36,17 @@ router.get('/', authenticate, async (req, res) => {
             return;
         }
 
-        res.send(createResponse(0, profile));
+        res.send(createResponse(0, profile._doc));
     } catch (e) {
         logger.error(e.message);
-        res.status(400).send(createErrorResponse(statusCodes.ERROR, e.message));
+        res.status(200).send(createErrorResponse(statusCodes.ERROR, e.message));
     }
 });
 
 // update profile - Education section
 router.post('/education', authenticate, async (req, res) => {
     try {
-        const userId = req.body['user'];
+        const userId = req['user']['_id'];
         let profile = await Profile.getProfile(userId);
         if (!profile) {
             logger.debug("Profile not found for user "+ userId);
@@ -61,14 +61,14 @@ router.post('/education', authenticate, async (req, res) => {
         res.send(createResponse(0, profile));
     } catch (e) {
         logger.error(e.message);
-        res.status(400).send(createErrorResponse(statusCodes.ERROR, e.message));
+        res.status(200).send(createErrorResponse(statusCodes.ERROR, e.message));
     }
 });
 
 // update profile - Experience section
 router.post('/experience', authenticate, async (req, res) => {
     try {
-        const userId = req.body['user'];
+        const userId = req['user']['_id'];
         let profile = await Profile.getProfile(userId);
         if (!profile) {
             logger.debug("Profile not found for user "+ userId);
@@ -84,14 +84,14 @@ router.post('/experience', authenticate, async (req, res) => {
         res.send(createResponse(0, profile));
     } catch (e) {
         logger.error(e.message);
-        res.status(400).send(createErrorResponse(statusCodes.ERROR, e.message));
+        res.status(200).send(createErrorResponse(statusCodes.ERROR, e.message));
     }
 });
 
 // update profile - Social section
 router.post('/social', authenticate, async (req, res) => {
     try {
-        const userId = req.body['user'];
+        const userId = req['user']['_id'];
         let profile = await Profile.getProfile(userId);
         if (!profile) {
             logger.debug("Profile not found for user "+ userId);
@@ -104,27 +104,27 @@ router.post('/social', authenticate, async (req, res) => {
         res.send(createResponse(0, profile));
     } catch (e) {
         logger.error(e.message);
-        res.status(400).send(createErrorResponse(statusCodes.ERROR, e.message));
+        res.status(200).send(createErrorResponse(statusCodes.ERROR, e.message));
     }
 });
 
 // update profile - About section
 router.post('/about', authenticate, async (req, res) => {
     try {
-    const userId = req.body['userId'];
-    let profile = await Profile.getProfile(userId);
-    if (!profile) {
-        logger.debug("Profile not found for user "+ userId);
-        res.send(createResponse(statusCodes.PROFILE_NOT_FOUND, "No profile found for give user"));
-        return;
-    }
+        const userId = req['user']['_id'];
+        let profile = await Profile.getProfile(userId);
+        if (!profile) {
+            logger.debug("Profile not found for user "+ userId);
+            res.send(createResponse(statusCodes.PROFILE_NOT_FOUND, "No profile found for give user"));
+            return;
+        }
 
-    const about = req.body['about'];
-    profile = await profile.updateAbout(about);
-    res.send(createResponse(0, profile));
+        const about = req.body['about'];
+        profile = await profile.updateAbout(about);
+        res.send(createResponse(0, profile));
     } catch (e) {
         logger.error(e.message);
-        res.status(400).send(createErrorResponse(statusCodes.ERROR, e.message));
+        res.status(200).send(createErrorResponse(statusCodes.ERROR, e.message));
     }
 });
 

@@ -76,11 +76,24 @@ const SocialSubSchema = new mongoose.Schema({
     _id: false
 });
 
+const AvatarSchema = new mongoose.Schema({
+    imageName: {
+        type: String,
+        default: "none",
+        required: true
+    },
+    imageData: {
+        type: String,
+        required: true
+    }
+});
+
 const ProfileSchema = new Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    avatar: AvatarSchema,
     userName: {
         type: String
     },
@@ -114,7 +127,7 @@ ProfileSchema.methods.updateEducation = function (education) {
     profile.education.push(education);
     return profile.save()
         .then(() => {
-            return profile;
+            return profile._doc;
         })
 };
 
@@ -123,7 +136,7 @@ ProfileSchema.methods.updateExperience = function (experience) {
     profile.experience.push(experience);
     return profile.save()
         .then(() => {
-            return profile;
+            return profile._doc;
         })
 };
 
@@ -132,7 +145,7 @@ ProfileSchema.methods.updateSocial = function (socialData) {
     profile.social.push(socialData);
     return profile.save()
         .then(() => {
-            return profile;
+            return profile._doc;
         })
 };
 
@@ -141,8 +154,21 @@ ProfileSchema.methods.updateAbout = function (about) {
     profile.about = about;
     return profile.save()
         .then(() => {
-            return profile;
+            return profile._doc;
         })
+};
+
+
+ProfileSchema.methods.setAvatar = function (imageName, path) {
+    const profile = this;
+    profile.avatar = {
+        imageName:imageName,
+        imageData:path
+    };
+    return profile.save()
+        .then(() => {
+            return profile._doc;
+        });
 };
 
 ProfileSchema.statics.getProfile = function (userId) {

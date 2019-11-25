@@ -3,13 +3,13 @@ const createResponse = (statusCode, data) => {
         status_code: statusCode,
         data: data
     }
-}
+};
 
 const createErrorResponse = (statusCode, errMessage) => {
     return {
         status_code: statusCode,
         error: errMessage
     }
-}
+};
 
-module.exports = { createResponse, createErrorResponse }
+module.exports = { createResponse, createErrorResponse };

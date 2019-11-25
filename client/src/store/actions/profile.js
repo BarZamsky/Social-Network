@@ -42,7 +42,7 @@ export const editProfileFail = (err) => {
     }
 };
 
-export const logout = () => {
+export const clearProfile = () => {
     localStorage.removeItem('userId');
     return {
         type: actionTypes.PROFILE_LOGOUT
@@ -61,13 +61,11 @@ export const getProfile = () => {
 
         if (response.data && response.data.status_code === 1008) {
             dispatch(emptyProfile());
-            return;
         } else if (response.data.status_code !== 0) {
             dispatch(getProfileFail(response.data.data));
-            return;
         } else {
             localStorage.setItem('userId', response.data.data.user);
-            dispatch(getProfileSuccess(response.data.data.profile, response.data.data.user))
+            dispatch(getProfileSuccess(response.data.data, response.data.data.user))
         }
     }
 };

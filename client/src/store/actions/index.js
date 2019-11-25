@@ -1,2 +1,2 @@
 export {signin, logout, setAuthRedirectPath, authCheckState} from "./auth"
-export {getProfile, editProfileIntro} from "./profile"
+export {getProfile, editProfileIntro, clearProfile} from "./profile"

@@ -12,7 +12,8 @@ connectDB();
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 app.use(bodyParser.json({ limit: '5mb', type: 'application/json' }));
-app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use('/api/v1/uploads', express.static('uploads'));
 
 app.use('/api/v1', routes);
 

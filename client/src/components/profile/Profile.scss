@@ -78,7 +78,7 @@
 
 .info_name {
   font-family: Gisha;
-  margin-top: 90px;
+  margin-top: 80px;
   margin-left: 35px;
   font-size: 26px;
   font-weight: bold;
@@ -86,13 +86,13 @@
 
 .info_data {
   font-family: Gisha;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: 35px;
   font-size: 15px;
 }
 
 .info_data:last-child {
-  margin-top: 8px;
+  margin-top: 3px;
 }
 
 .profile_edit_img {
@@ -136,13 +136,60 @@
   margin-left: 35px;
   font-weight: bold;
   font-size: 20px;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 .about_body {
   position: absolute;
-  margin-top: 60px;
+  margin-top: 50px;
   margin-left: 35px;
+}
+
+.edit_about_wrapper {
+  position: relative;
+  margin-top: 100px;
+  height: 300px;
+  text-align: center;
+}
+
+.edit_about_head {
+  padding: 10px;
+  color: #1E90FF;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: left;
+}
+
+.edit_about_textarea {
+  width: 450px;
+  height: 160px;
+  padding: 16px;
+  resize: none;
+  border-radius: 3px;
+  font-size: 18px;
+}
+
+.edit_about_textarea:focus {
+  outline: none;
+  border: 1px solid #1E90FF;
+}
+
+.edit_about_btn {
+  padding: 8px;
+  width: 70px;
+  font-size: 16px;
+  color: #112C41;
+  margin-top: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background-color: #cccccc;
+  cursor: pointer;
+}
+
+.edit_about_btn:focus,
+.edit_about_btn:hover{
+  background-color: #1E90FF;
+  outline: none;
 }
 
 .contact_info_wrapper {
@@ -290,44 +337,42 @@
 .edit_group_label {
   font-weight: bold;
   font-size: 16px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   margin-left: 15px;
-  margin-top: 15px;
+  margin-top: 8px;
 }
 
 .edit_general {
-  margin-top: 25px;
+  margin-top: 8px;
 }
 
 .edit_intro_group {
   display: flex;
   height: 40px;
-  margin-top: 5px;
   margin-left: 18px;
 }
 
 .edit_intro_label {
-  margin-right: 4px;
   padding: 6px;
   font-size: 14px;
 }
 
 .edit_intro_item {
   width: 150px;
-  height: 15px;
+  height: 13px;
   border: none;
   border-bottom: 1px solid #ccc;
   padding: 6px;
   border-radius: 2px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-.edit_intro_item:focus,
-.edit_intro_item:hover {
+.edit_intro_item:focus{
   outline: none;
+  border-bottom: 1px solid #1E90FF;
 }
 
-//@media (min-width: 500px) {
+//@media (max-width: 1600px) {
 //  .profile_box_wrapper {
 //    width: 60%;
 //  }
