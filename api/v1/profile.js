@@ -3,22 +3,26 @@ const express = require('express'),
     logger = require("../../middleware/logger"),
     authenticate = require("../../middleware/authenticate"),
     _ = require('lodash'),
-    multer = require('multer'),
     {Profile} = require('../../models/Profile'),
-    {User} = require("../../models/User"),
     statusCodes = require('../../utils/statusCodes'),
     {createResponse, createErrorResponse} = require('../../utils/createServerResponse'),
     {stringToDate} = require('../../utils/dateUtils'),
-    mongoose = require('mongoose'),
-    ObjectId = mongoose.Schema.Types.objectId;
+    mongoose = require('mongoose');
 
 // initial user's profile
 router.post('/', authenticate, async (req, res) => {
     try {
-        const body = _.pick(req.body, ['user', 'userName', 'title', 'companyName','country', 'city']);
-        const profile = new Profile(body);
-        await profile.save();
-        res.send(createResponse(0, profile));
+        const userId = req['user']['_id'];
+        const body = _.pick(req.body, ['userName', 'title', 'companyName','country', 'city']);
+        let profile = await Profile.getProfile(userId);
+        if (!profile) {
+            const profile = new Profile(body);
+            await profile.save();
+            res.send(createResponse(0, profile));
+        } else {
+            profile = await profile.updateInfo(body);
+            res.send(createResponse(0, profile));
+        }
     } catch (e) {
         logger.error(e.message);
         res.status(200).send(createErrorResponse(statusCodes.ERROR, e.message));
@@ -92,14 +96,14 @@ router.post('/experience', authenticate, async (req, res) => {
 router.post('/social', authenticate, async (req, res) => {
     try {
         const userId = req['user']['_id'];
+        const social = _.pick(req.body, ['github', 'website']);
         let profile = await Profile.getProfile(userId);
         if (!profile) {
-            logger.debug("Profile not found for user "+ userId);
-            res.send(createResponse(statusCodes.PROFILE_NOT_FOUND, "No profile found for give user"));
-            return;
+            const profile = new Profile(social);
+            await profile.save();
+            res.send(createResponse(0, profile));
         }
 
-        const social = _.pick(req.body, ['github', 'website']);
         profile = await profile.updateSocial(social);
         res.send(createResponse(0, profile));
     } catch (e) {
@@ -112,11 +116,8 @@ router.post('/social', authenticate, async (req, res) => {
 router.post('/about', authenticate, async (req, res) => {
     try {
         const userId = req['user']['_id'];
+        const about = _.pick(req.body, ['about']);
         let profile = await Profile.getProfile(userId);
-        const about = {
-            about: req.body['about']
-        };
-
         if (!profile) {
             const profile = new Profile(about);
             await profile.save();

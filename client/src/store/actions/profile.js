@@ -73,18 +73,21 @@ export const getProfile = () => {
 };
 
 export const editProfileIntro = (body) => {
-    // return dispatch => {
-    //     dispatch(profileStart());
-    //
-    //     server.post("/profile", body, (err, res) => {
-    //         if (err) {
-    //             dispatch(editProfileFail(err));
-    //             return;
-    //         }
-    //
-    //         dispatch(editProfileSuccess(res.data.profile))
-    //     });
-    // }
+    return async dispatch => {
+        dispatch(profileStart());
+
+        const token = localStorage.getItem('token');
+        const response = await axios.post(BASE_URL + "/profile",body, {
+            headers: {'x-auth': token},
+            withCredentials: true
+        });
+
+        if (response.data.status_code !== 0) {
+            dispatch(editProfileFail(response.data.data));
+        } else {
+            dispatch(editProfileSuccess(response.data.data))
+        }
+    }
 };
 
 export const editAboutSection = (body) => {

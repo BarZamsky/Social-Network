@@ -80,6 +80,7 @@ class Profile extends Component{
         };
 
         this.props.editProfileIntro(body);
+        this.setState({done: true})
     };
 
     switchContactInfoMode = () => {

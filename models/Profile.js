@@ -140,6 +140,19 @@ ProfileSchema.methods.updateExperience = function (experience) {
         })
 };
 
+ProfileSchema.methods.updateInfo = function (info) {
+    const profile = this;
+    profile.userName = info['userName'];
+    profile.title = info['title'];
+    profile.companyName = info['companyName'];
+    profile.country = info['country'];
+    profile.city = info['city'];
+    return profile.save()
+        .then(() => {
+            return profile._doc;
+        })
+};
+
 ProfileSchema.methods.updateSocial = function (socialData) {
     const profile = this;
     profile.social.push(socialData);
