@@ -37,10 +37,12 @@ class Profile extends Component{
         about: null,
 
         avatar: require("../../assets/images/default-avatar.png"),
-        error: false
+        error: false,
+        done: false
     };
 
-    componentDidMount() {
+    async componentDidMount() {
+        await this.props.getProfile();
         this.setState({avatar: this.props.profile && this.props.profile.avatar.imageData ? process.env.REACT_APP_BACKEND_SERVER+this.props.profile.avatar.imageData : require("../../assets/images/default-avatar.png")})
     }
 
@@ -86,30 +88,30 @@ class Profile extends Component{
         }))
     };
 
-    onClickSaveInfoHandler = () => {};
+    onClickSaveInfoHandler = () => {
+        const body = {
+            github: this.state.gitUrl,
+            website: this.state.website
+        };
 
-    editAboutHandler = async () => {
+        this.props.editSocialSection(body);
+        this.setState({done: true})
+    };
+
+    editAboutHandler = () => {
         const body = {
             about: this.state.about
         };
 
-        const response = await axios.post(process.env.REACT_APP_BACKEND_SERVER+'/profile/about', body, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'x-auth': this.props.token
-            }
-        });
-
-        console.log(response);
-        this.props.getProfile();
+        this.props.editAboutSection(body);
+        this.setState({done: true})
     };
 
     onChangeHandler = (e) => {this.setState({ [e.target.id]: e.target.value })};
 
     showModal = (mode) => {this.setState({showModal: true, modalMode: mode});};
 
-    closeModal = () => {this.setState({showModal: false, modalMode: "", editContact: false})};
+    closeModal = () => {this.setState({showModal: false, modalMode: "", editContact: false, done: false})};
 
     render() {
         let body ;
@@ -166,6 +168,8 @@ class Profile extends Component{
                 {this.state.showModal && this.state.modalMode === 'about' ?
                     <Modal show onCloseModal={this.closeModal} className="editAbout">
                         <EditAbout
+                            done={this.state.done}
+                            loading={this.props.loading}
                             editAboutHandler={this.editAboutHandler}
                             profile={this.props.profile}
                             closeModal={this.closeModal}
@@ -189,7 +193,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getProfile: () => dispatch(actions.getProfile()),
-        editProfileIntro: (body) => dispatch(actions.editProfileIntro(body))
+        editProfileIntro: (body) => dispatch(actions.editProfileIntro(body)),
+        editAboutSection: (about) => dispatch(actions.editAboutSection(about)),
+        editSocialSection: (body) => dispatch(actions.editSocialSection(body))
     }
 };
 

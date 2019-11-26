@@ -113,14 +113,17 @@ router.post('/about', authenticate, async (req, res) => {
     try {
         const userId = req['user']['_id'];
         let profile = await Profile.getProfile(userId);
+        const about = {
+            about: req.body['about']
+        };
+
         if (!profile) {
-            logger.debug("Profile not found for user "+ userId);
-            res.send(createResponse(statusCodes.PROFILE_NOT_FOUND, "No profile found for give user"));
-            return;
+            const profile = new Profile(about);
+            await profile.save();
+            res.send(createResponse(0, profile));
         }
 
-        const about = req.body['about'];
-        profile = await profile.updateAbout(about);
+        profile = await profile.updateAbout(req.body['about']);
         res.send(createResponse(0, profile));
     } catch (e) {
         logger.error(e.message);

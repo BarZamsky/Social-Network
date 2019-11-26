@@ -147,7 +147,6 @@
 
 .edit_about_wrapper {
   position: relative;
-  margin-top: 100px;
   height: 300px;
   text-align: center;
 }
@@ -158,6 +157,11 @@
   font-weight: bold;
   font-size: 20px;
   text-align: left;
+}
+
+.edit_about_head.success {
+  text-align: center;
+  padding-top: 20px;
 }
 
 .edit_about_textarea {
@@ -190,6 +194,12 @@
 .edit_about_btn:hover{
   background-color: #1E90FF;
   outline: none;
+}
+
+.success_img {
+  height: 150px;
+  width: 120px;
+  margin-top: 10px;
 }
 
 .contact_info_wrapper {

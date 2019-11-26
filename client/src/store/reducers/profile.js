@@ -5,7 +5,8 @@ const initialState = {
     profile: null,
     userId: null,
     error: null,
-    loading: false
+    loading: false,
+    done: false
 };
 
 const profileStart = (state, action) => {

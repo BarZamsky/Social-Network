@@ -5,6 +5,7 @@
   border-radius: 6px;
   top:50%;
   left:50%;
+  margin-top: 80px;
   transform: translate(-50%,30%);
   transition: all 5s ease-in-out;
 }
@@ -14,6 +15,7 @@
 }
 
 .Modal.editIntro {
+  margin-top: 0;
   width: 700px;
 }
 

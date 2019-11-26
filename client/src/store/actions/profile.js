@@ -1,6 +1,8 @@
 import * as actionTypes from "./actionTypes"
 import axios from "axios"
 
+const BASE_URL = process.env.REACT_APP_BACKEND_SERVER;
+
 export const profileStart = () => {
     return {
         type: actionTypes.PROFILE_START
@@ -54,7 +56,7 @@ export const getProfile = () => {
         dispatch(profileStart());
 
         const token = localStorage.getItem('token');
-        const response = await axios.get(process.env.REACT_APP_BACKEND_SERVER + "/profile", {
+        const response = await axios.get(BASE_URL + "/profile", {
             headers: {'x-auth': token},
             withCredentials: true
         });
@@ -83,4 +85,40 @@ export const editProfileIntro = (body) => {
     //         dispatch(editProfileSuccess(res.data.profile))
     //     });
     // }
+};
+
+export const editAboutSection = (body) => {
+    return async dispatch => {
+        dispatch(profileStart());
+
+        const token = localStorage.getItem('token');
+        const response = await axios.post(BASE_URL + "/profile/about",body, {
+            headers: {'x-auth': token},
+            withCredentials: true
+        });
+
+        if (response.data.status_code !== 0) {
+            dispatch(editProfileFail(response.data.data));
+        } else {
+            dispatch(editProfileSuccess(response.data.data))
+        }
+    }
+};
+
+export const editSocialSection = (body) => {
+    return async dispatch => {
+        dispatch(profileStart());
+
+        const token = localStorage.getItem('token');
+        const response = await axios.post(BASE_URL + "/profile/social",body, {
+            headers: {'x-auth': token},
+            withCredentials: true
+        });
+
+        if (response.data.status_code !== 0) {
+            dispatch(editProfileFail(response.data.data));
+        } else {
+            dispatch(editProfileSuccess(response.data.data))
+        }
+    }
 };
