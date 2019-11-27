@@ -155,7 +155,7 @@ ProfileSchema.methods.updateInfo = function (info) {
 
 ProfileSchema.methods.updateSocial = function (socialData) {
     const profile = this;
-    profile.social.push(socialData);
+    profile.social = socialData;
     return profile.save()
         .then(() => {
             return profile._doc;

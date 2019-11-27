@@ -6,8 +6,7 @@ const express = require('express'),
     {Profile} = require('../../models/Profile'),
     statusCodes = require('../../utils/statusCodes'),
     {createResponse, createErrorResponse} = require('../../utils/createServerResponse'),
-    {stringToDate} = require('../../utils/dateUtils'),
-    mongoose = require('mongoose');
+    {stringToDate} = require('../../utils/dateUtils');
 
 // initial user's profile
 router.post('/', authenticate, async (req, res) => {

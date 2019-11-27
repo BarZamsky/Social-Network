@@ -45,14 +45,13 @@ const info = (props) => {
                 <div className="contact_info_edit_img" onClick={props.switchContactInfoMode}>
                     <img className="edit_icon" src={require("../../assets/images/edit.jpg")} alt="edit"/>
                 </div>
-                <div className="contact_info_head">Contact info</div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">GitHub</div>
-                    <label>GitHub</label>
+                    <label>{props.profile && props.profile.social && props.profile.social.github ? props.profile.social.github : "GitHub"}</label>
                 </div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">Personal Website</div>
-                    <label>Personal Website</label>
+                    <label>{props.profile && props.profile.social && props.profile.social.website ? props.profile.social.website : "Personal Website"}</label>
                 </div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">Birth Date</div>
@@ -75,7 +74,7 @@ const info = (props) => {
     return (
         <div className="contact_info_wrapper">
             <div className="contact_info_header">
-                <div className="contact_info_title">{props.user.fullName}</div>
+                <div className="contact_info_head">Contact info</div>
             </div>
             {contactInfo}
         </div>
