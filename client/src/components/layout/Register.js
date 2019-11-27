@@ -1,85 +1,84 @@
 import React, {Component} from "react"
-import {Redirect, Link} from "react-router-dom"
+import {Link} from "react-router-dom"
 import Spinner from "../UI/Spinner/Spinner"
 import server from "../../server"
+
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import InputMask from 'react-input-mask';
+import DateFnsUtils from '@date-io/date-fns';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers"
 
 class Register extends Component{
 
     state = {
-        fullName: null,
-        fullNameError: false,
-        email: null,
-        emailError: false,
-        password: null,
-        passwordError: false,
-        dd:null,
-        mm:null,
-        yyyy:null,
-        phone1:null,
-        phone2:null,
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        birthDate: new Date(),
+        phoneNumber:"",
         loading: false,
         error: false,
         errorMessage: "Something went wrong with your request",
-        success: false,
-        formValid: false
+        success: false
     };
 
     componentDidMount() {
         this.setState({
-            fullName: null,
-            email: null,
-            password: null,
-            dd:null,
-            mm:null,
-            yyyy:null,
-            phone1:null,
-            phone2:null,
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            birthDate: new Date(),
+            phoneNumber:"",
             loading: false,
             error: false,
             errorMessage: "Something went wrong with your request",
-            success: false,
-            formValid:false
+            success: false
         })
     }
 
     onChangeHandler = e => {
         e.preventDefault();
         this.setState({ [e.target.id]: e.target.value });
-        this.validateForm();
     };
 
+    handleDateChange = date => {this.setState({birthDate: date})};
+
     onClickHandler = () => {
-        this.validateForm();
-        if (this.state.formValid) {
-            this.setState({loading: true});
-            const birthDate = this.state.dd + "/" + this.state.mm + "/" + this.state.yyyy;
-            const body = {
-                fullName: this.state.fullName,
-                email: this.state.email,
-                password: this.state.password,
-                birthDate: birthDate,
-                phoneNumber: this.state.phone1+"-"+this.state.phone2
-            };
+        this.setState({loading: true});
+        const body = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            password: this.state.password,
+            birthDate: this.state.birthDate,
+            phoneNumber: this.state.phoneNumber
+        };
 
-            server.post("/auth/register", body, (err, res) => {
-                console.log(err, res);
-                this.setState({loading: false});
-                if (err) {
-                    this.setState({error: true});
-                    return;
-                }
+        server.post("/auth/register", body, (err, res) => {
+            console.log(err, res);
+            this.setState({loading: false});
+            if (err) {
+                this.setState({error: true});
+                return;
+            }
 
-                if (res && res.data.status_code === 1007) {
-                    const msg = "Given email already exists in the system.";
-                    this.setState({error: true, errorMessage: msg});
-                    return
-                }
+            if (res && res.data.status_code === 1007) {
+                const msg = "Given email already exists in the system.";
+                this.setState({error: true, errorMessage: msg});
+                return
+            }
 
-                if (res && res.data.status_code === 0) {
-                    this.setState({success: true})
-                }
-            })
-        }
+            if (res && res.data.status_code === 0) {
+                this.setState({success: true})
+            }
+        })
     };
 
     reloadPage = () => {
@@ -87,99 +86,121 @@ class Register extends Component{
         window.location.reload();
     };
 
-    validateForm = () => {
-        let isValid = true;
-
-        if (this.state.email) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(this.state.email) && isValid;
-            !isValid ? this.setState({emailError: true}) : this.setState({emailError: false})
-        } else
-            this.setState({emailError: true});
-
-        if (this.state.password) {
-            isValid = isValid && this.state.password.length >= 7;
-            !isValid ? this.setState({passwordError: true}) : this.setState({passwordError: false})
-
-        } else
-            this.setState({passwordError: true});
-
-        if (!this.state.fullName) {
-            isValid = false;
-            this.setState({fullNameError: true})
-        } else {
-            this.setState({fullNameError: false})
-        }
-
-        if (!this.state.fullNameError && !this.state.passwordError && !this.state.emailError)
-            this.setState({formValid: true});
-        else
-            this.setState({formValid: false});
-        return isValid;
-    };
-
     render() {
         let body = (
-            <>
-                <div className="row">
-                    <h4>Account</h4>
-                    <div className="input-group">
-                        <div className={this.state.fullNameError ? "input-field err" : "input-field"}>
-                            <i className="fa fa-user icon"/>
-                            <input id="fullName" type="text" placeholder="Full Name" onChange={this.onChangeHandler} autoComplete="off" />
-                        </div>
-                        <div className={this.state.emailError ? "input-field err" : "input-field"}>
-                            <i className="fa fa-envelope icon"/>
-                            <input id="email" type="email" placeholder="Email Address" onChange={this.onChangeHandler} autoComplete="off" />
-                        </div>
-                        <div className={this.state.passwordError ? "input-field err" : "input-field"}>
-                            <i className="fa fa-key icon"/>
-                            <input id="password" type="password" placeholder="Password" onChange={this.onChangeHandler}/>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-half">
-                    <h4>Date of Birth</h4>
-                        <div className="input-group">
-                            <div className="col-third">
-                                <input id="dd" type="text" placeholder="DD" onChange={this.onChangeHandler} autoComplete="off"/>
-                            </div>
-                            <div className="col-third">
-                                <input id="mm" type="text" placeholder="MM" onChange={this.onChangeHandler} autoComplete="off"/>
-                            </div>
-                            <div className="col-third">
-                                <input id="yyyy" type="text" placeholder="YYYY" onChange={this.onChangeHandler} autoComplete="off"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-half right">
-                        <h4>Phone Number</h4>
-                        <div className="input-group">
-                            <div className="col-third">
-                                <input id="phone1" type="text" placeholder="999" onChange={this.onChangeHandler} autoComplete="off"/>
-                            </div>
-                            <div className="col-third middle">-</div>
-                            <div className="col-third number">
-                                <input id="phone2" type="text" placeholder="9999999" onChange={this.onChangeHandler} autoComplete="off"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <button className="register-btn" onClick={this.onClickHandler}>CREATE ACCOUNT</button>
-                </div>
-                <div className="row link">
-                    <Link to="/">Cancel</Link>
-                </div>
-            </>
-        )
+            <Container component="main" maxWidth="xs">
+                <img className="form_logo" src={require("../../assets/images/logo_transparent.png")} alt="logo"/>
+                <form onSubmit={this.onClickHandler}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                autoComplete="fname"
+                                name="firstName"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="firstName"
+                                label="First Name"
+                                autoFocus
+                                onChange={this.onChangeHandler}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="lastName"
+                                label="Last Name"
+                                name="lastName"
+                                autoComplete="lname"
+                                onChange={this.onChangeHandler}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                onChange={this.onChangeHandler}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                onChange={this.onChangeHandler}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <InputMask
+                                mask="999 999 9999"
+                                maskChar=" "
+                                onChange={this.onChangeHandler}>
+                                {() => <TextField
+                                    autoComplete="pNumber"
+                                    name="phoneNumber"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="phoneNumber"
+                                    label="Phone Number"
+                                /> }
+                            </InputMask>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    fullWidth
+                                    disableToolbar
+                                    variant="outlined"
+                                    format="dd/MM/yyyy"
+                                    margin="normal"
+                                    id="date-picker-inline"
+                                    label="Birth Date"
+                                    value={this.state.birthDate}
+                                    onChange={this.handleDateChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}/>
+                            </MuiPickersUtilsProvider>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                style={{'textAlign':'left'}}
+                                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                label="I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy."
+                            />
+                        </Grid>
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        style={{'marginTop':'20px','marginBottom':'8px','backgroundColor':'#00008B','color':'white'}}>
+                        Sign Up
+                    </Button>
+                    <Grid container justify="flex-end">
+                        <Grid item>
+                            <Link to="/login" className="login_link">Already have an account? Sign in</Link>
+                        </Grid>
+                    </Grid>
+                </form>
+            </Container>
+        );
+
         if (this.state.loading)
-            body = (
-                <div className="spinner-container">
-                    <Spinner />
-                </div>
-            )
+            body = <Spinner />
 
         if (this.state.error)
             body = (
@@ -200,13 +221,8 @@ class Register extends Component{
         }
 
         return (
-            <div className="register_wrapper">
-                <div className="register_form_wrapper">
-                    <div className="logo-container">
-                        <img className="register_logo" src={require("../../assets/images/logo_transparent.png")} alt="logo"/>
-                    </div>
-                    {body}
-                </div>
+            <div className="wrapper">
+                {body}
             </div>
         )
     }

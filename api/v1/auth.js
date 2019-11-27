@@ -43,9 +43,9 @@ router.post('/signin', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     try {
-        const body = _.pick(req.body, ['fullName','email', 'password','birthDate', 'phoneNumber']);
+        const body = _.pick(req.body, ['firstName','lastName','email', 'password','birthDate', 'phoneNumber']);
         body['createdDate'] =  new Date();
-        body['birthDate'] =  stringToDate(body['birthDate'], "dd/MM/yyyy", "/");
+        body['birthDate'] =  new Date(body['birthDate']);
         body['lastLogin'] = "";
         const user = new User(body);
         await user.save();

@@ -3,11 +3,11 @@ import React from "react"
 const header = (props) => {
 
     let headerBody;
-
+    const userName = [props.user.firstName, props.user.lastName].join(" ");
     if (props.profile) {
         headerBody = (
             <div className="profile_info_left">
-                <div className="info_name">{props.user.fullName}</div>
+                <div className="info_name">{userName}</div>
                 <div className="info_data">{props.profile.title ? props.profile.title : "Title"}</div>
                 <div className="info_data">{props.profile.companyName ? props.profile.companyName : "company"} | {props.profile.city ? props.profile.city : "city"} | {props.profile.country ? props.profile.country : "country"}</div>
             </div>
@@ -15,7 +15,7 @@ const header = (props) => {
     } else {
         headerBody = (
             <div className="profile_info_left">
-                <div className="info_name">{props.user.fullName}</div>
+                <div className="info_name">{userName}</div>
                 <div className="info_data">Edit your profile intro to add more info</div>
             </div>
         )

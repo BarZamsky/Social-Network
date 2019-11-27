@@ -20,7 +20,7 @@ const editIntro = (props) => {
                       <input
                           className="edit_intro_item"
                           id="userName"
-                          placeholder={props.profile.userName ? props.profile.userName : "User Name"}
+                          placeholder={props.profile && props.profile.userName ? props.profile.userName : "User Name"}
                           autoComplete="off"
                           onChange={props.onChangeHandler}/>
                   </div>
@@ -29,7 +29,7 @@ const editIntro = (props) => {
                       <input
                           className="edit_intro_item"
                           id="title"
-                          placeholder={props.profile.title ? props.profile.title : "Job Title"}
+                          placeholder={props.profile && props.profile.title ? props.profile.title : "Job Title"}
                           autoComplete="off"
                           onChange={props.onChangeHandler}/>
                   </div>
@@ -41,7 +41,7 @@ const editIntro = (props) => {
                   <input
                       className="edit_intro_item"
                       id="companyName"
-                      placeholder={props.profile.companyName ? props.profile.companyName : "Company Name"}
+                      placeholder={props.profile && props.profile.companyName ? props.profile.companyName : "Company Name"}
                       autoComplete="off"
                       onChange={props.onChangeHandler}/>
               </div>
@@ -50,7 +50,7 @@ const editIntro = (props) => {
                   <input
                       className="edit_intro_item"
                       id="companyName"
-                      placeholder={props.profile.country ? props.profile.country : "Country"}
+                      placeholder={props.profile && props.profile.country ? props.profile.country : "Country"}
                       autoComplete="off"
                       onChange={props.onChangeHandler}/>
               </div>
@@ -59,7 +59,7 @@ const editIntro = (props) => {
                   <input
                       className="edit_intro_item"
                       id="city"
-                      placeholder={props.profile.city ? props.profile.city : "City"}
+                      placeholder={props.profile && props.profile.city ? props.profile.city : "City"}
                       autoComplete="off"
                       onChange={props.onChangeHandler}/>
               </div>
