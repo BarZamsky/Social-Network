@@ -1,16 +1,7 @@
 import React from "react"
+import "./Spinner.scss"
 
 const spinner = () => (
-    <div className="lds-roller">
-        <div/>
-        <div/>
-        <div/>
-        <div/>
-        <div/>
-        <div/>
-        <div/>
-        <div/>
-    </div>
-)
-
+    <div className="loader"/>
+);
 export default spinner

@@ -14,11 +14,21 @@ const info = (props) => {
                 <div className="contact_info_head">Edit your info</div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">GitHub</div>
-                    <input id="gitUrl" className="contact_info_input" placeholder="GitHub URL" onChange={props.onChangeHandler}/>
+                    <input
+                        id="gitUrl"
+                        className="contact_info_input"
+                        defaultValue={props.profile && props.profile.social && props.profile.social.github ? props.profile.social.github :""}
+                        placeholder={props.profile && props.profile.social && props.profile.social.github ? "" : "GitHub URL"}
+                        onChange={props.onChangeHandler}/>
                 </div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">Personal Website</div>
-                    <input id="website" className="contact_info_input" placeholder="Personal Website" onChange={props.onChangeHandler}/>
+                    <input
+                        id="website"
+                        className="contact_info_input"
+                        defaultValue={props.profile && props.profile.social && props.profile.social.website ? props.profile.social.website :""}
+                        placeholder={props.profile && props.profile.social && props.profile.social.website ? "" : "Personal Website"}
+                        onChange={props.onChangeHandler}/>
                 </div>
                 <div className="contact_info_group">
                     <div className="contact_info_label">Birth Date</div>

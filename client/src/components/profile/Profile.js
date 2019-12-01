@@ -72,11 +72,11 @@ class Profile extends Component{
 
     onClickEditIntroHandler = () => {
         const body = {
-            title: this.state.title || "",
-            country: this.state.country || "",
-            city: this.state.city || "",
-            companyName: this.state.companyName || "",
-            userName: this.state.userName || ""
+            title: this.state.title || this.props.profile && this.props.profile.title || "",
+            country: this.state.country || this.props.profile && this.props.profile.country || "",
+            city: this.state.city || this.props.profile && this.props.profile.city || "",
+            companyName: this.state.companyName || this.props.profile && this.props.profile.companyName || "",
+            userName: this.state.userName || this.props.profile && this.props.profile.userName || ""
         };
 
         this.props.editProfileIntro(body);
