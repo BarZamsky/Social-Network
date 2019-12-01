@@ -88,7 +88,7 @@ class Register extends Component{
 
     render() {
         let body = (
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" style={{"marginBottom":'20px'}}>
                 <img className="form_logo" src={require("../../assets/images/logo_transparent.png")} alt="logo"/>
                 <form onSubmit={this.onClickHandler}>
                     <Grid container spacing={2}>

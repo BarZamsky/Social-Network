@@ -91,8 +91,8 @@ class Profile extends Component{
 
     onClickSaveInfoHandler = () => {
         const body = {
-            github: this.state.gitUrl,
-            website: this.state.website
+            github: this.state.gitUrl || this.props.profile && this.props.profile.social && this.props.profile.social.gitUrl || "",
+            website: this.state.website || this.props.profile && this.props.profile.social && this.props.profile.social.website || ""
         };
 
         this.props.editSocialSection(body);
@@ -149,11 +149,13 @@ class Profile extends Component{
             {this.state.showModal && this.state.modalMode === 'contact' ?
                 <Modal show onCloseModal={this.closeModal} className="contactInfo">
                     <ContactInfo
+                        done={this.state.done}
                         profile={this.props.profile}
                         user={this.props.user}
                         onClickSaveInfoHandler={this.onClickSaveInfoHandler}
                         switchContactInfoMode={this.switchContactInfoMode}
                         onChangeHandler={this.onChangeHandler}
+                        closeModal={this.closeModal}
                         editMode={this.state.editContact}/>
                 </Modal> : null}
 
