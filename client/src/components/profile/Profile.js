@@ -10,6 +10,7 @@ import About from "./About"
 import EditAbout from "./EditAbout"
 import EditIntro from "./EditIntro"
 import axios from "axios"
+import Skills from "./Skills"
 
 import "./Profile.scss"
 import * as actions from "../../store/actions";
@@ -135,6 +136,7 @@ class Profile extends Component{
                 <About
                     showModal={this.showModal}
                     profile={this.props.profile}/>
+                <Skills />
                 </>
             )
         }

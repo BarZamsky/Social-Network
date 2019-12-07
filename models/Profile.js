@@ -114,7 +114,10 @@ const ProfileSchema = new Schema({
     },
     experience: [ExperienceSubSchema],
     education: [EducationSubSchema],
-    social: SocialSubSchema
+    social: SocialSubSchema,
+    skills: [{
+        type: String
+    }]
 });
 
 ProfileSchema.methods.toJSON = function () {
